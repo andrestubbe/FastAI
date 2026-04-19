@@ -1,4 +1,4 @@
-# FastAI — Unified, Zero-Bloat Java AI Client
+# FastAI — Unified AI client for Java
 
 **⚡ One interface for all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
