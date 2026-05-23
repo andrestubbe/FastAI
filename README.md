@@ -63,9 +63,10 @@ FastAI solves this by providing:
 
 ## Installation
 
-### Maven
+### Option 1: Maven (Recommended)
+Add the JitPack repository and the dependencies to your `pom.xml`:
 
-```xml
+`xml
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -73,32 +74,32 @@ FastAI solves this by providing:
     </repository>
 </repositories>
 
-<dependency>
-    <groupId>com.github.andrestubbe</groupId>
-    <artifactId>fastai</artifactId>
-    <version>v1.0.0</version>
-</dependency>
-```
+<dependencies>
+    <!-- FastAI Library -->
+    <dependency>
+        <groupId>com.github.andrestubbe</groupId>
+        <artifactId>fastai</artifactId>
+        <version>v0.1.0</version>
+    </dependency>
+</dependencies>
+`
 
-### Gradle
-
-```groovy
+### Option 2: Gradle (via JitPack)
+`groovy
 repositories {
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:fastai:v1.0.0'
+    implementation 'com.github.andrestubbe:.1.0'
 }
-```
+`
 
-### Direct Download
+### Option 3: Direct Download (No Build Tool)
+Download the latest JARs directly to add them to your classpath:
 
-Download JAR from [Releases](https://github.com/andrestubbe/FastAI/releases)
+1. 📦 **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core Library)
 
-**Zero Dependencies:** Pure Java, no JNI or native libraries required.
-
----
 
 ## API Reference
 
