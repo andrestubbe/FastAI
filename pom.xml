@@ -6,9 +6,7 @@
 
     <groupId>com.github.andrestubbe</groupId>
             <artifactId>fastai</artifactId>
-           <version>0.1.0</version>
-     <version>0.1.0</version>
-     <version>0.1.0</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>FastAI</name>
@@ -23,3 +21,4 @@
 
     <!-- No external dependencies by design! FastJava-Style -->
 </project>
+
