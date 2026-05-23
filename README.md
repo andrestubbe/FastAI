@@ -1,11 +1,6 @@
 ﻿# FastAI — Unified AI client for Java [ALPHA] - v0.1.0
 **⚡ One interface for all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
-[![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
-[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![JitPack](https://jitpack.io/v/andrestubbe/FastAI.svg)](https://jitpack.io/#andrestubbe/FastAI)
-
 ```java
 // Quick Start — One interface, any provider
 AI localAI = FastAI.connect("ollama:llama3.1");
@@ -21,6 +16,12 @@ FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LL
 **Keywords:** java ai client, ollama java, lmstudio java, openai java client, claude java client, fast ai framework java, langchain4j alternative, spring ai alternative, low learning curve ai, simple llm java
 
 If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is your solution.
+
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
 ---
 
