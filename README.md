@@ -1,5 +1,5 @@
-﻿# FastAI â€” Unified AI client for Java [ALPHA] - v0.1.0
-**âš¡ One interface for all Local and Cloud AI models â€” No JSON, No HTTP, No Boilerplate.**
+﻿# FastAI — Unified AI client for Java [ALPHA] - v0.1.0
+**⚡ One interface for all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
@@ -7,7 +7,7 @@
 [![JitPack](https://jitpack.io/v/andrestubbe/FastAI.svg)](https://jitpack.io/#andrestubbe/FastAI)
 
 ```java
-// Quick Start â€” One interface, any provider
+// Quick Start — One interface, any provider
 AI localAI = FastAI.connect("ollama:llama3.1");
 System.out.println(localAI.ask("Explain quantum physics simply."));
 
@@ -44,20 +44,20 @@ If you need **a drop-in AI module**, **multi-provider interchangeability**, or *
 Current AI libraries in Java (`LangChain4j`, `Spring AI`) are huge, framework-heavy, and come with dependency hell. Direct SDKs lock you into one provider.
 
 FastAI solves this by providing:
-- **Zero JSON handling** â€” everything is native Java Strings and Files.
-- **Provider Interchangeability** â€” switch between `ollama` and `openai` by changing one string.
-- **Zero Dependencies** â€” pure Java 17+, no Jackson, no Spring.
-- **True Unified Interface** â€” `AI` is all you need to know.
+- **Zero JSON handling** — everything is native Java Strings and Files.
+- **Provider Interchangeability** — switch between `ollama` and `openai` by changing one string.
+- **Zero Dependencies** — pure Java 17+, no Jackson, no Spring.
+- **True Unified Interface** — `AI` is all you need to know.
 
 ---
 
 ## Key Features
 
-- **Local + Cloud Support** â€” Use local models or cloud giants with the same code.
-- **Simple Attachments** â€” Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
-- **System Prompts** â€” Native support for System vs User prompts.
-- **Ultra-Lightweight** â€” Just drop the JAR into your project.
-- **Streaming First** â€” Every provider supports unified streaming callbacks.
+- **Local + Cloud Support** — Use local models or cloud giants with the same code.
+- **Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
+- **System Prompts** — Native support for System vs User prompts.
+- **Ultra-Lightweight** — Just drop the JAR into your project.
+- **Streaming First** — Every provider supports unified streaming callbacks.
 
 ---
 
@@ -139,12 +139,12 @@ ai.stream("Write a poem", System.out::print);
 
 | Provider | Type | Status | Features |
 |----------|------|--------|----------|
-| Ollama | Local | âœ… Native | Chat, Stream, Vision |
-| LM Studio | Local | âœ… Native | Chat, Stream, Vision |
-| OpenAI | Cloud | âœ… Native | Chat, Stream, Vision |
-| Anthropic Claude | Cloud | âœ… Native | Chat, Stream, Vision |
-| Mistral | Cloud | âœ… Native | Chat, Stream |
-| DeepSeek | Cloud | âœ… Native | Chat, Stream |
+| Ollama | Local | ✅ Native | Chat, Stream, Vision |
+| LM Studio | Local | ✅ Native | Chat, Stream, Vision |
+| OpenAI | Cloud | ✅ Native | Chat, Stream, Vision |
+| Anthropic Claude | Cloud | ✅ Native | Chat, Stream, Vision |
+| Mistral | Cloud | ✅ Native | Chat, Stream |
+| DeepSeek | Cloud | ✅ Native | Chat, Stream |
 
 ---
 
@@ -181,23 +181,23 @@ mvn compile exec:java    # Run demo
 
 ```
 fastai/
-â”œâ”€â”€ src/main/java/fastai/       # Main API
-â”‚   â”œâ”€â”€ FastAI.java             # Connection factory
-â”‚   â”œâ”€â”€ AI.java                 # Unified interface
-â”‚   â””â”€â”€ providers/              # Provider implementations
-â”œâ”€â”€ examples/00-basic-usage/    # Usage demo
-â”‚   â”œâ”€â”€ pom.xml
-â”‚   â””â”€â”€ src/main/java/fastai/examples/
-â”œâ”€â”€ pom.xml                     # Maven config
-â”œâ”€â”€ README.md                   # This file
-â””â”€â”€ LICENSE                     # MIT License
+├── src/main/java/fastai/       # Main API
+│   ├── FastAI.java             # Connection factory
+│   ├── AI.java                 # Unified interface
+│   └── providers/              # Provider implementations
+├── examples/00-basic-usage/    # Usage demo
+│   ├── pom.xml
+│   └── src/main/java/fastai/examples/
+├── pom.xml                     # Maven config
+├── README.md                   # This file
+└── LICENSE                     # MIT License
 ```
 
 **Why `examples/` on root level?**
-- Not part of the library â†’ separate mini-projects
-- Not tests â†’ tutorials for users
-- Each example has its own `pom.xml` â†’ runnable standalone
-- Copy-paste friendly â†’ users can use as starter template
+- Not part of the library → separate mini-projects
+- Not tests → tutorials for users
+- Each example has its own `pom.xml` → runnable standalone
+- Copy-paste friendly → users can use as starter template
 
 ---
 
@@ -218,10 +218,10 @@ See [COMPILE.md](COMPILE.md) for detailed build instructions.
 
 ## License
 
-MIT License â€” free for commercial and private use. See [LICENSE](LICENSE) for details.
+MIT License — free for commercial and private use. See [LICENSE](LICENSE) for details.
 
 ---
 
-**Part of the FastJava Ecosystem** â€” *Making the JVM faster.*
+**Part of the FastJava Ecosystem** — *Making the JVM faster.*
 
 
