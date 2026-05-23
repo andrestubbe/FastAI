@@ -1,5 +1,4 @@
-# FastAI — Unified AI client for Java
-
+# FastAI — Unified AI client for Java [ALPHA] - v0.1.0
 **⚡ One interface for all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
@@ -223,3 +222,4 @@ MIT License — free for commercial and private use. See [LICENSE](LICENSE) for 
 ---
 
 **Part of the FastJava Ecosystem** — *Making the JVM faster.*
+
