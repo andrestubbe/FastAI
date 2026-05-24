@@ -1,27 +1,33 @@
-﻿# FastAI — Unified AI client for Java [ALPHA] - v0.1.0
-**⚡ One interface for all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
-
-```java
-// Quick Start — One interface, any provider
-AI localAI = FastAI.connect("ollama:llama3.1");
-System.out.println(localAI.ask("Explain quantum physics simply."));
-
-// Transparent Streaming
-AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
-cloudAI.stream("Write a novel", token -> System.out.print(token));
-```
-
-FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI, Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP clients, and bloated frameworks. 
-
-**Keywords:** java ai client, ollama java, lmstudio java, openai java client, claude java client, fast ai framework java, langchain4j alternative, spring ai alternative, low learning curve ai, simple llm java
-
-If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is your solution.
+﻿# FastAI v0.1.0 [ALPHA] — Unified AI client for Java
 
 [![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/v0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
+
+**⚡ One interface for
+all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
+
+FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI,
+Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP
+clients, and bloated frameworks.
+
+
+If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is
+your solution.
+cloudAI.stream("Write a novel", token -> System.out.print(token));
+
+```java
+// Quick Start — One interface, any provider
+AI localAI = FastAI.connect("ollama:llama3.1");
+        System.out.
+
+println(localAI.ask("Explain quantum physics simply."));
+
+// Transparent Streaming
+AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
+```
 
 ---
 
@@ -42,9 +48,11 @@ If you need **a drop-in AI module**, **multi-provider interchangeability**, or *
 
 ## Why FastAI?
 
-Current AI libraries in Java (`LangChain4j`, `Spring AI`) are huge, framework-heavy, and come with dependency hell. Direct SDKs lock you into one provider.
+Current AI libraries in Java (`LangChain4j`, `Spring AI`) are huge, framework-heavy, and come with dependency hell.
+Direct SDKs lock you into one provider.
 
 FastAI solves this by providing:
+
 - **Zero JSON handling** — everything is native Java Strings and Files.
 - **Provider Interchangeability** — switch between `ollama` and `openai` by changing one string.
 - **Zero Dependencies** — pure Java 17+, no Jackson, no Spring.
@@ -65,9 +73,11 @@ FastAI solves this by providing:
 ## Installation
 
 ### Option 1: Maven (Recommended)
+
 Add the JitPack repository and the dependencies to your `pom.xml`:
 
 ```xml
+
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -76,16 +86,17 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 </repositories>
 
 <dependencies>
-    <!-- FastAI Library -->
-    <dependency>
-        <groupId>com.github.andrestubbe</groupId>
-        <artifactId>fastai</artifactId>
-        <version>v0.1.0</version>
-    </dependency>
+<!-- FastAI Library -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>fastai</artifactId>
+    <version>v0.1.0</version>
+</dependency>
 </dependencies>
 ```
 
 ### Option 2: Gradle (via JitPack)
+
 ```groovy
 repositories {
     maven { url 'https://jitpack.io' }
@@ -97,14 +108,16 @@ dependencies {
 ```
 
 ### Option 3: Direct Download (No Build Tool)
+
 Download the latest JARs directly to add them to your classpath:
 
-1. 📦 **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core Library)
-
+1. 📦 **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core
+   Library)
 
 ## API Reference
 
 ### Connect
+
 ```java
 // Local Providers
 AI ai = FastAI.connect("ollama:llama3.1");
@@ -118,6 +131,7 @@ AI ai = FastAI.connect("deepseek:chat", "key...");
 ```
 
 ### Generation & Prompting
+
 ```java
 // Simple prompt
 String answer = ai.ask("Hello!");
@@ -130,22 +144,23 @@ String answer = ai.ask("What is in this image?", new File("diagram.png"));
 ```
 
 ### Streaming
+
 ```java
-ai.stream("Write a poem", System.out::print);
+ai.stream("Write a poem",System.out::print);
 ```
 
 ---
 
 ## Providers Supported
 
-| Provider | Type | Status | Features |
-|----------|------|--------|----------|
-| Ollama | Local | ✅ Native | Chat, Stream, Vision |
-| LM Studio | Local | ✅ Native | Chat, Stream, Vision |
-| OpenAI | Cloud | ✅ Native | Chat, Stream, Vision |
+| Provider         | Type  | Status   | Features             |
+|------------------|-------|----------|----------------------|
+| Ollama           | Local | ✅ Native | Chat, Stream, Vision |
+| LM Studio        | Local | ✅ Native | Chat, Stream, Vision |
+| OpenAI           | Cloud | ✅ Native | Chat, Stream, Vision |
 | Anthropic Claude | Cloud | ✅ Native | Chat, Stream, Vision |
-| Mistral | Cloud | ✅ Native | Chat, Stream |
-| DeepSeek | Cloud | ✅ Native | Chat, Stream |
+| Mistral          | Cloud | ✅ Native | Chat, Stream         |
+| DeepSeek         | Cloud | ✅ Native | Chat, Stream         |
 
 ---
 
@@ -153,13 +168,13 @@ ai.stream("Write a poem", System.out::print);
 
 FastAI is **zero-dependency** and **zero-allocation** for the core connection layer:
 
-| Metric | LangChain4j | Spring AI | FastAI |
-|--------|-------------|-----------|--------|
-| **Dependencies** | 15+ | 20+ | **0** |
-| **JAR Size** | ~5MB | ~10MB | **~50KB** |
-| **Startup Time** | 2-3s | 5-10s | **<100ms** |
-| **Memory Overhead** | High | High | **Minimal** |
-| **Learning Curve** | Hours | Hours | **5 minutes** |
+| Metric              | LangChain4j | Spring AI | FastAI        |
+|---------------------|-------------|-----------|---------------|
+| **Dependencies**    | 15+         | 20+       | **0**         |
+| **JAR Size**        | ~5MB        | ~10MB     | **~50KB**     |
+| **Startup Time**    | 2-3s        | 5-10s     | **<100ms**    |
+| **Memory Overhead** | High        | High      | **Minimal**   |
+| **Learning Curve**  | Hours       | Hours     | **5 minutes** |
 
 ---
 
@@ -172,8 +187,8 @@ cd examples/00-basic-usage
 mvn compile exec:java    # Run demo
 ```
 
-| Example | Demonstrates |
-|---------|-------------|
+| Example          | Demonstrates                  |
+|------------------|-------------------------------|
 | `00-basic-usage` | Local AI, Cloud AI, Streaming |
 
 ---
@@ -195,6 +210,7 @@ fastai/
 ```
 
 **Why `examples/` on root level?**
+
 - Not part of the library → separate mini-projects
 - Not tests → tutorials for users
 - Each example has its own `pom.xml` → runnable standalone
