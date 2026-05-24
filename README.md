@@ -13,10 +13,12 @@ FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LL
 Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP
 clients, and bloated frameworks.
 
-
 If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is
 your solution.
 cloudAI.stream("Write a novel", token -> System.out.print(token));
+
+[![FastFileIndex Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
+
 
 ```java
 // Quick Start — One interface, any provider
@@ -218,27 +220,39 @@ fastai/
 
 ---
 
-## Roadmap
+## Documentation
 
-- **v1.0**: Core API, Text Generation, Local & Cloud Providers, Basic Streaming, System Prompts.
-- **v1.1**: Embeddings, Image Attachments mapping to Vision APIs, Audio Input.
-- **v1.2**: JNI bindings for local `llama.cpp`.
-- **v2.0**: FastAI Agent System, Tool Calling, Memory.
+* **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
+* **[REFERENCE.md](REFERENCE.md)**: Exhaustive catalog of SGR styles, OSC window parameters, and callback contracts.
+* **[PHILOSOPHIE.md](PHILOSOPHIE.md)**: Zero-allocation and low-overhead processing designs.
+* **[ROADMAP.md](ROADMAP.md)**: Planned milestone features and performance extensions.
 
 ---
 
-## Build from Source
+## Platform Support
 
-See [COMPILE.md](COMPILE.md) for detailed build instructions.
+| Platform      | Status            |
+|---------------|-------------------|
+| Windows 10/11 | ✅ Fully Supported |
+| Linux         | ✅ Fully Supported |
+| macOS         | ✅ Fully Supported |
 
 ---
 
 ## License
 
-MIT License — free for commercial and private use. See [LICENSE](LICENSE) for details.
+MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Part of the FastJava Ecosystem** — *Making the JVM faster.*
+## Related Projects
 
+- [FastFileIndex](https://github.com/andrestubbe/FastFileIndex) - Binary file indexing with mmap support
+- [FastFileSearch](https://github.com/andrestubbe/FastFileSearch) - Prefix Trie, N-Gram index, and Ranking engine
+- [FastFileWatch](https://github.com/andrestubbe/FastFileWatch) - USN Journal-based live file monitoring
+- [FastCore](https://github.com/andrestubbe/FastCore) - Unified JNI loader and platform abstraction
+
+---
+
+**Part of the FastJava Ecosystem** — *Making the JVM faster. Small package. Maximum speed. Zero bloat. 🚀📋*
 
