@@ -6,6 +6,8 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
+---
+
 **⚡ One interface for
 all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
@@ -17,8 +19,9 @@ If you need **a drop-in AI module**, **multi-provider interchangeability**, or *
 your solution.
 cloudAI.stream("Write a novel", token -> System.out.print(token));
 
-[![FastFileIndex Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
+---
 
+[![FastFileIndex Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
 ---
 
@@ -37,15 +40,14 @@ cloudAI.stream("Write a novel", token -> System.out.print(token));
 
 ---
 
+## Quick Start
+
 ```java
-// Quick Start — One interface, any provider
 AI localAI = FastAI.connect("ollama:llama3.1");
-        System.out.
+System.out.println(localAI.ask("Explain quantum physics simply."));
 
-println(localAI.ask("Explain quantum physics simply."));
-
-// Transparent Streaming
 AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
+System.out.println(cloudAI.ask("Explain quantum physics simply."));
 ```
 
 ---
@@ -66,13 +68,14 @@ FastAI solves this by providing:
 
 ## Key Features
 
-- **Local + Cloud Support** — Use local models or cloud giants with the same code.
-- **Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
-- **System Prompts** — Native support for System vs User prompts.
-- **Ultra-Lightweight** — Just drop the JAR into your project.
-- **Streaming First** — Every provider supports unified streaming callbacks.
+- **🌐 Local + Cloud Support** — Use local models or cloud giants with the same code.
+- **📎 Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
+- **🧠 System Prompts** — Native support for System vs User prompts.
+- **🪶 Ultra‑Lightweight** — Just drop the JAR into your project.
+- **📡 Streaming First** — Every provider supports unified streaming callbacks.
 
 ---
+
 
 ## Installation
 
@@ -81,16 +84,13 @@ FastAI solves this by providing:
 Add the JitPack repository and the dependencies to your `pom.xml`:
 
 ```xml
-
 <repositories>
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
     </repository>
 </repositories>
-
 <dependencies>
-<!-- FastAI Library -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
@@ -105,7 +105,6 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 repositories {
     maven { url 'https://jitpack.io' }
 }
-
 dependencies {
     implementation 'com.github.andrestubbe:fastai:v0.1.0'
 }
@@ -117,6 +116,8 @@ Download the latest JARs directly to add them to your classpath:
 
 1. 📦 **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core
    Library)
+
+---
 
 ## API Reference
 
