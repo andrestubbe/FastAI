@@ -20,17 +20,6 @@ cloudAI.stream("Write a novel", token -> System.out.print(token));
 [![FastFileIndex Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
 
 
-```java
-// Quick Start — One interface, any provider
-AI localAI = FastAI.connect("ollama:llama3.1");
-        System.out.
-
-println(localAI.ask("Explain quantum physics simply."));
-
-// Transparent Streaming
-AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
-```
-
 ---
 
 ## Table of Contents
@@ -45,6 +34,19 @@ AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
 - [Project Structure](#project-structure)
 - [Roadmap](#roadmap)
 - [License](#license)
+
+---
+
+```java
+// Quick Start — One interface, any provider
+AI localAI = FastAI.connect("ollama:llama3.1");
+        System.out.
+
+println(localAI.ask("Explain quantum physics simply."));
+
+// Transparent Streaming
+AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
+```
 
 ---
 
