@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fastai</artifactId>
+    <artifactId>fastaiservice</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>FastAI</name>
+    <name>FastAIService</name>
     <description>Unified, Zero-Bloat Java AI Client for Local and Cloud Models</description>
-    <url>https://github.com/andrestubbe/fastai</url>
+    <url>https://github.com/andrestubbe/fastaiservice</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,4 +21,3 @@
 
     <!-- No external dependencies by design! FastJava-Style -->
 </project>
-
