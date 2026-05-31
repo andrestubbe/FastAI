@@ -226,9 +226,10 @@ fastai/
 ## Documentation
 
 * **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
-* **[REFERENCE.md](REFERENCE.md)**: Exhaustive catalog of SGR styles, OSC window parameters, and callback contracts.
-* **[PHILOSOPHIE.md](PHILOSOPHIE.md)**: Zero-allocation and low-overhead processing designs.
-* **[ROADMAP.md](ROADMAP.md)**: Planned milestone features and performance extensions.
+* **[REFERENCE.md](docs/REFERENCE.md)**: Exhaustive catalog of SGR styles, OSC window parameters, and callback contracts.
+* **[PHILOSOPHIE.md](docs/PHILOSOPHIE.md)**: Zero-allocation and low-overhead processing designs.
+* **[ROADMAP.md](docs/ROADMAP.md)**: Planned milestone features and performance extensions.
+* **[CHANGELOG.md](docs/CHANGELOG.md)**
 
 ---
 
