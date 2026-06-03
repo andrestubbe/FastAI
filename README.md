@@ -1,4 +1,4 @@
-﻿# FastAI v0.1.0 [ALPHA] — Unified AI client for Java
+# FastAI v0.1.0 [ALPHA] � Unified AI client for Java
 
 [![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/v0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -8,8 +8,8 @@
 
 ---
 
-**⚡ One interface for
-all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
+**? One interface for
+all Local and Cloud AI models � No JSON, No HTTP, No Boilerplate.**
 
 FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI,
 Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP
@@ -59,20 +59,20 @@ Direct SDKs lock you into one provider.
 
 FastAI solves this by providing:
 
-- **Zero JSON handling** — everything is native Java Strings and Files.
-- **Provider Interchangeability** — switch between `ollama` and `openai` by changing one string.
-- **Zero Dependencies** — pure Java 17+, no Jackson, no Spring.
-- **True Unified Interface** — `AI` is all you need to know.
+- **Zero JSON handling** � everything is native Java Strings and Files.
+- **Provider Interchangeability** � switch between `ollama` and `openai` by changing one string.
+- **Zero Dependencies** � pure Java 17+, no Jackson, no Spring.
+- **True Unified Interface** � `AI` is all you need to know.
 
 ---
 
 ## Key Features
 
-- **🌐 Local + Cloud Support** — Use local models or cloud giants with the same code.
-- **📎 Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
-- **🧠 System Prompts** — Native support for System vs User prompts.
-- **🪶 Ultra‑Lightweight** — Just drop the JAR into your project.
-- **📡 Streaming First** — Every provider supports unified streaming callbacks.
+- **?? Local + Cloud Support** � Use local models or cloud giants with the same code.
+- **?? Simple Attachments** � Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
+- **?? System Prompts** � Native support for System vs User prompts.
+- **?? Ultra-Lightweight** � Just drop the JAR into your project.
+- **?? Streaming First** � Every provider supports unified streaming callbacks.
 
 ---
 
@@ -114,7 +114,7 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. 📦 **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core
+1. ?? **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core
    Library)
 
 ---
@@ -160,12 +160,12 @@ ai.stream("Write a poem",System.out::print);
 
 | Provider         | Type  | Status   | Features             |
 |------------------|-------|----------|----------------------|
-| Ollama           | Local | ✅ Native | Chat, Stream, Vision |
-| LM Studio        | Local | ✅ Native | Chat, Stream, Vision |
-| OpenAI           | Cloud | ✅ Native | Chat, Stream, Vision |
-| Anthropic Claude | Cloud | ✅ Native | Chat, Stream, Vision |
-| Mistral          | Cloud | ✅ Native | Chat, Stream         |
-| DeepSeek         | Cloud | ✅ Native | Chat, Stream         |
+| Ollama           | Local | ? Native | Chat, Stream, Vision |
+| LM Studio        | Local | ? Native | Chat, Stream, Vision |
+| OpenAI           | Cloud | ? Native | Chat, Stream, Vision |
+| Anthropic Claude | Cloud | ? Native | Chat, Stream, Vision |
+| Mistral          | Cloud | ? Native | Chat, Stream         |
+| DeepSeek         | Cloud | ? Native | Chat, Stream         |
 
 ---
 
@@ -202,24 +202,24 @@ mvn compile exec:java    # Run demo
 
 ```
 fastai/
-├── src/main/java/fastai/       # Main API
-│   ├── FastAI.java             # Connection factory
-│   ├── AI.java                 # Unified interface
-│   └── providers/              # Provider implementations
-├── examples/00-basic-usage/    # Usage demo
-│   ├── pom.xml
-│   └── src/main/java/fastai/examples/
-├── pom.xml                     # Maven config
-├── README.md                   # This file
-└── LICENSE                     # MIT License
++-- src/main/java/fastai/       # Main API
+�   +-- FastAI.java             # Connection factory
+�   +-- AI.java                 # Unified interface
+�   +-- providers/              # Provider implementations
++-- examples/00-basic-usage/    # Usage demo
+�   +-- pom.xml
+�   +-- src/main/java/fastai/examples/
++-- pom.xml                     # Maven config
++-- README.md                   # This file
++-- LICENSE                     # MIT License
 ```
 
 **Why `examples/` on root level?**
 
-- Not part of the library → separate mini-projects
-- Not tests → tutorials for users
-- Each example has its own `pom.xml` → runnable standalone
-- Copy-paste friendly → users can use as starter template
+- Not part of the library ? separate mini-projects
+- Not tests ? tutorials for users
+- Each example has its own `pom.xml` ? runnable standalone
+- Copy-paste friendly ? users can use as starter template
 
 ---
 
@@ -227,7 +227,7 @@ fastai/
 
 * **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
 * **[REFERENCE.md](docs/REFERENCE.md)**: Exhaustive catalog of SGR styles, OSC window parameters, and callback contracts.
-* **[PHILOSOPHIE.md](docs/PHILOSOPHIE.md)**: Zero-allocation and low-overhead processing designs.
+* **[PHILOSOPHY.md](docs/PHILOSOPHY.md)**: Zero-allocation and low-overhead processing designs.
 * **[ROADMAP.md](docs/ROADMAP.md)**: Planned milestone features and performance extensions.
 * **[CHANGELOG.md](docs/CHANGELOG.md)**
 
@@ -237,15 +237,15 @@ fastai/
 
 | Platform      | Status            |
 |---------------|-------------------|
-| Windows 10/11 | ✅ Fully Supported |
-| Linux         | ✅ Fully Supported |
-| macOS         | ✅ Fully Supported |
+| Windows 10/11 | ? Fully Supported |
+| Linux         | ? Fully Supported |
+| macOS         | ? Fully Supported |
 
 ---
 
 ## License
 
-MIT License — See [LICENSE](LICENSE) file for details.
+MIT License � See [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -258,5 +258,5 @@ MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Part of the FastJava Ecosystem** — *Making the JVM faster. Small package. Maximum speed. Zero bloat. 🚀📋*
+**Part of the FastJava Ecosystem** � *Making the JVM faster. Small package. Maximum speed. Zero bloat. ????*
 
