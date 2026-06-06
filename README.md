@@ -1,6 +1,6 @@
-# FastAI v0.1.0 [ALPHA] — Unified AI client for Java
+# FastAI 0.1.0 [ALPHA]  Unified AI client for Java
 
-[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/v0.1.0)
+[![Status](https://img.shields.io/badge/status-0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
@@ -9,7 +9,7 @@
 ---
 
 **? One interface for
-all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
+all Local and Cloud AI models  No JSON, No HTTP, No Boilerplate.**
 
 FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI,
 Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP
@@ -59,20 +59,20 @@ Direct SDKs lock you into one provider.
 
 FastAI solves this by providing:
 
-- **Zero JSON handling** — everything is native Java Strings and Files.
-- **Provider Interchangeability** — switch between `ollama` and `openai` by changing one string.
-- **Zero Dependencies** — pure Java 17+, no Jackson, no Spring.
-- **True Unified Interface** — `AI` is all you need to know.
+- **Zero JSON handling**  everything is native Java Strings and Files.
+- **Provider Interchangeability**  switch between `ollama` and `openai` by changing one string.
+- **Zero Dependencies**  pure Java 17+, no Jackson, no Spring.
+- **True Unified Interface**  `AI` is all you need to know.
 
 ---
 
 ## Key Features
 
-- **?? Local + Cloud Support** — Use local models or cloud giants with the same code.
-- **?? Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
-- **?? System Prompts** — Native support for System vs User prompts.
-- **?? Ultra-Lightweight** — Just drop the JAR into your project.
-- **?? Streaming First** — Every provider supports unified streaming callbacks.
+- **Ã°Å¸Å¡â‚¬ Local + Cloud Support**  Use local models or cloud giants with the same code.
+- **Ã°Å¸Å¡â‚¬ Simple Attachments**  Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
+- **Ã°Å¸Å¡â‚¬ System Prompts**  Native support for System vs User prompts.
+- **?Ã¢Å¡Â¡ Ultra-Lightweight**  Just drop the JAR into your project.
+- **Ã°Å¸Å¡â‚¬ Streaming First**  Every provider supports unified streaming callbacks.
 
 ---
 
@@ -94,7 +94,7 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
-    <version>v0.1.0</version>
+    <version>0.1.0</version>
 </dependency>
 </dependencies>
 ```
@@ -106,7 +106,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 dependencies {
-    implementation 'com.github.andrestubbe:fastai:v0.1.0'
+    implementation 'com.github.andrestubbe:fastai:0.1.0'
 }
 ```
 
@@ -114,7 +114,7 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. ?? **[fastai-v0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/v0.1.0/fastai-v0.1.0.jar)** (The Core
+1. Ã°Å¸Å¡â‚¬ **[fastai-0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.0/fastai-0.1.0.jar)** (The Core
    Library)
 
 ---
@@ -203,12 +203,12 @@ mvn compile exec:java    # Run demo
 ```
 fastai/
 +-- src/main/java/fastai/       # Main API
-¦   +-- FastAI.java             # Connection factory
-¦   +-- AI.java                 # Unified interface
-¦   +-- providers/              # Provider implementations
+   +-- FastAI.java             # Connection factory
+   +-- AI.java                 # Unified interface
+   +-- providers/              # Provider implementations
 +-- examples/00-basic-usage/    # Usage demo
-¦   +-- pom.xml
-¦   +-- src/main/java/fastai/examples/
+   +-- pom.xml
+   +-- src/main/java/fastai/examples/
 +-- pom.xml                     # Maven config
 +-- README.md                   # This file
 +-- LICENSE                     # MIT License
@@ -245,7 +245,7 @@ fastai/
 
 ## License
 
-MIT License — See [LICENSE](LICENSE) file for details.
+MIT License  See [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -258,5 +258,5 @@ MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Part of the FastJava Ecosystem** — *Making the JVM faster. Small package. Maximum speed. Zero bloat. ????*
+**Part of the FastJava Ecosystem**  *Making the JVM faster. Small package. Maximum speed. Zero bloat. Ã°Å¸Å¡â‚¬Ã°Å¸Å¡â‚¬*
 
