@@ -112,6 +112,20 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
     <artifactId>fastcore</artifactId>
     <version>0.1.0</version>
 </dependency>
+
+<!-- FastString (Required Dependency) -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>FastString</artifactId>
+    <version>0.1.0</version>
+</dependency>
+
+<!-- FastBytes (Required Dependency) -->
+<dependency>
+    <groupId>com.github.andrestubbe</groupId>
+    <artifactId>FastBytes</artifactId>
+    <version>0.1.0</version>
+</dependency>
 </dependencies>
 ```
 
@@ -126,6 +140,8 @@ dependencies {
     implementation 'com.github.andrestubbe:fastai:0.1.0'
     implementation 'com.github.andrestubbe:FastJSON:0.1.0'
     implementation 'com.github.andrestubbe:fastcore:0.1.0'
+    implementation 'com.github.andrestubbe:FastString:0.1.0'
+    implementation 'com.github.andrestubbe:FastBytes:0.1.0'
 }
 ```
 
@@ -136,6 +152,8 @@ Download the latest JARs directly to add them to your classpath:
 1. 🚀 **[fastai-0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.0/fastai-0.1.0.jar)** (Core Library)
 2. 📦 **[FastJSON-0.1.0.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.0/FastJSON-0.1.0.jar)** (Required JSON Parser)
 3. ⚙️ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (Mandatory Native JNI Loader)
+4. 📦 **[FastString-0.1.0.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.0/FastString-0.1.0.jar)** (Required String Dependency)
+5. 📦 **[FastBytes-0.1.0.jar](https://github.com/andrestubbe/FastBytes/releases/download/0.1.0/FastBytes-0.1.0.jar)** (Required Bytes Dependency)
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
