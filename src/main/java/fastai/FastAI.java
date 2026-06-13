@@ -21,6 +21,7 @@ public final class FastAI {
             case "claude"   -> new ClaudeClient(model, argOrNull(args, 0));
             case "mistral"  -> new MistralClient(model, argOrNull(args, 0));
             case "deepseek" -> new DeepSeekClient(model, argOrNull(args, 0));
+            case "gemini"   -> new GeminiClient(model, argOrNull(args, 0));
             default -> throw new IllegalArgumentException("Unknown provider: " + provider);
         };
 
