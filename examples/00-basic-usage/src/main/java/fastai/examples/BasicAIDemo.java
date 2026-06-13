@@ -16,41 +16,18 @@ public class BasicAIDemo {
         System.out.println("FastAI - Basic Demo");
         System.out.println("====================\n");
         
-        // Example 1: Local AI (Ollama)
-        System.out.println("1. Local AI (Ollama) - requires ollama running locally");
-        try {
-            AI localAI = FastAI.connect("ollama:llama3.1");
-            String response = localAI.ask("Explain Java in one sentence.");
-            System.out.println("Response: " + response);
-        } catch (Exception e) {
-            System.out.println("Note: Ollama not running locally. Skipping local AI demo.");
-            System.out.println("      Install from https://ollama.com to test local AI.");
-        }
-        System.out.println();
-        
-        // Example 2: Cloud AI (OpenAI) - requires OPENAI_API_KEY env variable
-        System.out.println("2. Cloud AI (OpenAI) - requires OPENAI_API_KEY env variable");
-        String apiKey = System.getenv("OPENAI_API_KEY");
-        if (apiKey != null && !apiKey.isEmpty()) {
-            AI cloudAI = FastAI.connect("openai:gpt-4o", apiKey);
-            try {
-                String response = cloudAI.ask("What is the capital of France?");
-                System.out.println("Response: " + response);
-            } catch (Exception e) {
-                System.out.println("OpenAI test failed: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Note: OPENAI_API_KEY not set. Skipping cloud AI demo.");
-            System.out.println("      Set your API key to test cloud providers.");
-        }
-        System.out.println();
-        
-        // Example 2.1: Cloud AI (Gemini) - requires GEMINI_API_KEY env variable
-        System.out.println("2.1. Cloud AI (Gemini) - requires GEMINI_API_KEY env variable");
+        // Cloud AI (Gemini) - requires GEMINI_API_KEY env variable
+        System.out.println("1. Cloud AI (Gemini) - requires GEMINI_API_KEY env variable");
         String geminiKey = System.getenv("GEMINI_API_KEY");
         if (geminiKey != null && !geminiKey.isEmpty()) {
-            AI geminiAI = FastAI.connect("gemini:gemini-1.5-flash", geminiKey);
+            // Using gemini-2.5-flash as the cheapest/fastest default model
+            AI geminiAI = FastAI.connect("gemini:gemini-2.5-flash", geminiKey);
             try {
+                System.out.println("Available Gemini Models:");
+                for (String m : geminiAI.getModels()) {
+                    System.out.println(" - " + m);
+                }
+                System.out.println();
                 String response = geminiAI.ask("Explain Java in one sentence.");
                 System.out.println("Response: " + response);
             } catch (Exception e) {
@@ -58,25 +35,8 @@ public class BasicAIDemo {
             }
         } else {
             System.out.println("Note: GEMINI_API_KEY not set. Skipping Gemini AI demo.");
-            System.out.println("      Set your API key to test Gemini.");
         }
         System.out.println();
-        
-        // Example 3: Streaming (local AI)
-        System.out.println("3. Streaming demo (Ollama)");
-        try {
-            AI streamAI = FastAI.connect("ollama:llama3.1");
-            System.out.print("Streaming: ");
-            streamAI.stream("Count from 1 to 5", token -> {
-                System.out.print(token);
-                System.out.flush();
-            });
-            System.out.println();
-        } catch (Exception e) {
-            System.out.println("Note: Ollama not running. Skipping streaming demo.");
-        }
-        System.out.println();
-        
         System.out.println("Demo complete!");
         System.out.println("\nSupported providers: ollama, lmstudio, openai, claude, mistral, deepseek");
     }

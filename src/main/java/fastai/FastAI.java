@@ -3,6 +3,7 @@ package fastai;
 import fastai.providers.*;
 
 import java.io.File;
+import java.util.List;
 import java.util.function.Consumer;
 
 public final class FastAI {
@@ -57,6 +58,12 @@ public final class FastAI {
             public void stream(String prompt, Consumer<String> tokenHandler) {
                 provider.stream(AIRequest.of(prompt), tokenHandler);
             }
+
+            @Override
+            public List<String> getModels() {
+                return provider.getModels();
+            }
         };
     }
 }
+

@@ -1,6 +1,7 @@
 package fastai;
 
 import java.io.File;
+import java.util.List;
 import java.util.function.Consumer;
 
 public interface AI {
@@ -16,4 +17,7 @@ public interface AI {
     default void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler) {
         stream(systemPrompt + "\n\n" + userPrompt, tokenHandler);
     }
+
+    List<String> getModels();
 }
+

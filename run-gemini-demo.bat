@@ -5,4 +5,3 @@ echo 🚀 [FastAI] Running Demo (leise)...
 cd examples\00-basic-usage
 call mvn -q compile exec:java -Dexec.mainClass=fastai.examples.BasicAIDemo
 cd ..\..
-pause

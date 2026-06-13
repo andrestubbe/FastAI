@@ -2,6 +2,7 @@ package fastai.providers;
 
 import fastai.AIProvider;
 import fastai.AIRequest;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class MistralClient implements AIProvider {
@@ -23,4 +24,10 @@ public class MistralClient implements AIProvider {
     public void stream(AIRequest request, Consumer<String> tokenHandler) {
         throw new UnsupportedOperationException("Mistral streaming coming in v1.0");
     }
+
+    @Override
+    public List<String> getModels() {
+        throw new UnsupportedOperationException("Mistral getModels coming in v1.0");
+    }
 }
+

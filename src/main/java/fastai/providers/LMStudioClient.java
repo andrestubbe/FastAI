@@ -2,6 +2,7 @@ package fastai.providers;
 
 import fastai.AIProvider;
 import fastai.AIRequest;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class LMStudioClient implements AIProvider {
@@ -21,4 +22,10 @@ public class LMStudioClient implements AIProvider {
     public void stream(AIRequest request, Consumer<String> tokenHandler) {
         throw new UnsupportedOperationException("LMStudio streaming coming in v1.0");
     }
+
+    @Override
+    public List<String> getModels() {
+        throw new UnsupportedOperationException("LMStudio getModels coming in v1.0");
+    }
 }
+

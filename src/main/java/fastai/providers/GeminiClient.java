@@ -10,6 +10,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class GeminiClient implements AIProvider {
@@ -63,6 +65,51 @@ public class GeminiClient implements AIProvider {
         throw new UnsupportedOperationException("Streaming not yet implemented for Gemini in this iteration");
     }
 
+    @Override
+    public List<String> getModels() {
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new IllegalStateException("Gemini API key is missing");
+        }
+
+        String url = "https://generativelanguage.googleapis.com/v1beta/models?key=" + apiKey;
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        try {
+            HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("Gemini API Error: " + response.statusCode() + " - " + response.body());
+            }
+
+            List<String> modelsList = new ArrayList<>();
+            try (FastJsonValue doc = FastJSON.parse(response.body())) {
+                FastJsonValue modelsArray = doc.path("models");
+                if (modelsArray != null && modelsArray.isArray()) {
+                    for (int i = 0; i < modelsArray.size(); i++) {
+                        FastJsonValue modelObj = modelsArray.get(i);
+                        if (modelObj != null) {
+                            FastJsonValue nameVal = modelObj.path("name");
+                            if (nameVal != null && !nameVal.isNull()) {
+                                String name = nameVal.asString();
+                                if (name.startsWith("models/")) {
+                                    name = name.substring("models/".length());
+                                }
+                                modelsList.add(name);
+                            }
+                        }
+                    }
+                }
+            }
+            return modelsList;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Failed to list Gemini models", e);
+        }
+    }
+
     private String buildJsonRequest(AIRequest request) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
@@ -92,3 +139,4 @@ public class GeminiClient implements AIProvider {
                     .replace("\t", "\\t");
     }
 }
+
