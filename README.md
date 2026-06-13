@@ -68,11 +68,11 @@ FastAI solves this by providing:
 
 ## Key Features
 
-- **🚀 Local + Cloud Support**  Use local models or cloud giants with the same code.
-- **🚀 Simple Attachments**  Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
-- **🚀 System Prompts**  Native support for System vs User prompts.
+- **🌐 Local + Cloud Support**  Use local models or cloud giants with the same code.
+- **📎 Simple Attachments**  Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
+- **🎭 System Prompts**  Native support for System vs User prompts.
 - **⚡ Ultra-Lightweight**  Just drop the JAR into your project.
-- **🚀 Streaming First**  Every provider supports unified streaming callbacks.
+- **🌊 Streaming First**  Every provider supports unified streaming callbacks.
 
 ---
 
@@ -112,10 +112,10 @@ dependencies {
 
 ### Option 3: Direct Download (No Build Tool)
 
-Download the latest JARs directly to add them to your classpath:
+Download the latest JARs directly to add them to your classpath (FastAI requires FastJSON as a dependency):
 
-1. 🚀 **[fastai-0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.0/fastai-0.1.0.jar)** (The Core
-   Library)
+1. 🚀 **[fastai-0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.0/fastai-0.1.0.jar)** (Core Library)
+2. 📦 **[FastJSON-0.1.0.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.0/FastJSON-0.1.0.jar)** (Dependency)
 
 ---
 
@@ -158,14 +158,15 @@ ai.stream("Write a poem",System.out::print);
 
 ## Providers Supported
 
-| Provider         | Type  | Status   | Features             |
-|------------------|-------|----------|----------------------|
-| Ollama           | Local | ✔️ Native | Chat, Stream, Vision |
-| LM Studio        | Local | ✔️ Native | Chat, Stream, Vision |
-| OpenAI           | Cloud | ✔️ Native | Chat, Stream, Vision |
-| Anthropic Claude | Cloud | ✔️ Native | Chat, Stream, Vision |
-| Mistral          | Cloud | ✔️ Native | Chat, Stream         |
-| DeepSeek         | Cloud | ✔️ Native | Chat, Stream         |
+| Provider         | Type  | Status     | Features             |
+|------------------|-------|------------|----------------------|
+| Gemini           | Cloud | ✔️ Native  | Chat, List Models    |
+| Ollama           | Local | 🚧 Partial | List Models          |
+| LM Studio        | Local | 🚧 Planned | -                    |
+| OpenAI           | Cloud | 🚧 Planned | -                    |
+| Anthropic Claude | Cloud | 🚧 Planned | -                    |
+| Mistral          | Cloud | 🚧 Planned | -                    |
+| DeepSeek         | Cloud | 🚧 Planned | -                    |
 
 ---
 
@@ -198,28 +199,16 @@ mvn compile exec:java    # Run demo
 
 ---
 
-## Project Structure
+## API Quick Reference
 
-```
-fastai/
-+-- src/main/java/fastai/       # Main API
-   +-- FastAI.java             # Connection factory
-   +-- AI.java                 # Unified interface
-   +-- providers/              # Provider implementations
-+-- examples/00-basic-usage/    # Usage demo
-   +-- pom.xml
-   +-- src/main/java/fastai/examples/
-+-- pom.xml                     # Maven config
-+-- README.md                   # This file
-+-- LICENSE                     # MIT License
-```
-
-**Why `examples/` on root level?**
-
-- Not part of the library -> separate mini-projects
-- Not tests -> tutorials for users
-- Each example has its own `pom.xml` -> runnable standalone
-- Copy-paste friendly -> users can use as starter template
+| Method / Factory | Return Type | Description |
+|------------------|-------------|-------------|
+| `FastAI.connect(spec, args...)` | `AI` | Connects to a provider (e.g. `"gemini"`, `"ollama"`) with optional API key. |
+| `ai.ask(prompt)` | `String` | Sends a simple user prompt to the model and returns the response. |
+| `ai.ask(systemPrompt, userPrompt)` | `String` | Sends a prompt with a configured system instruction. |
+| `ai.ask(prompt, file)` | `String` | Sends a prompt along with a file attachment (images/vision). |
+| `ai.stream(prompt, handler)` | `void` | Streams tokens back dynamically as they are generated. |
+| `ai.getModels()` | `List<String>` | Lists all available models from the provider. |
 
 ---
 
