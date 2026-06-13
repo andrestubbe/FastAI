@@ -6,16 +6,32 @@ import java.util.function.Consumer;
 
 public interface AI {
 
-    String ask(String prompt);
+    AIResponse generate(AIRequest request);
 
-    String ask(String systemPrompt, String userPrompt);
+    default String ask(String prompt) {
+        return generate(AIRequest.of(prompt)).text();
+    }
 
-    String ask(String prompt, File attachment);
+    default String ask(String systemPrompt, String userPrompt) {
+        return generate(AIRequest.of(systemPrompt, userPrompt)).text();
+    }
+
+    default String ask(String prompt, File attachment) {
+        return generate(AIRequest.of(prompt, attachment)).text();
+    }
 
     void stream(String prompt, Consumer<String> tokenHandler);
 
+    default void stream(String prompt, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
+        stream(prompt, tokenHandler);
+    }
+
     default void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler) {
-        stream(systemPrompt + "\n\n" + userPrompt, tokenHandler);
+        throw new UnsupportedOperationException("Streaming with system prompt is not supported by default");
+    }
+
+    default void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
+        stream(systemPrompt, userPrompt, tokenHandler);
     }
 
     List<String> getModels();

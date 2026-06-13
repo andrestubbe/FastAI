@@ -1,33 +1,9 @@
 package fastai.providers;
 
-import fastai.AIProvider;
-import fastai.AIRequest;
-import java.util.List;
-import java.util.function.Consumer;
-
-public class OpenAIClient implements AIProvider {
-
-    private final String model;
-    private final String apiKey;
-
+public class OpenAIClient extends OpenAICompatibleClient {
     public OpenAIClient(String model, String apiKey) {
-        this.model = model;
-        this.apiKey = apiKey;
-    }
-
-    @Override
-    public String generate(AIRequest request) {
-        throw new UnsupportedOperationException("OpenAI implementation coming in v1.0");
-    }
-
-    @Override
-    public void stream(AIRequest request, Consumer<String> tokenHandler) {
-        throw new UnsupportedOperationException("OpenAI streaming coming in v1.0");
-    }
-
-    @Override
-    public List<String> getModels() {
-        throw new UnsupportedOperationException("OpenAI getModels coming in v1.0");
+        super("https://api.openai.com/v1",
+                model != null && !model.isEmpty() ? model : "gpt-4o",
+                apiKey);
     }
 }
-

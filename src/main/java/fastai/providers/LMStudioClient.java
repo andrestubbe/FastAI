@@ -1,31 +1,9 @@
 package fastai.providers;
 
-import fastai.AIProvider;
-import fastai.AIRequest;
-import java.util.List;
-import java.util.function.Consumer;
-
-public class LMStudioClient implements AIProvider {
-
-    private final String model;
-
+public class LMStudioClient extends OpenAICompatibleClient {
     public LMStudioClient(String model) {
-        this.model = model;
-    }
-
-    @Override
-    public String generate(AIRequest request) {
-        throw new UnsupportedOperationException("LMStudio implementation coming in v1.0");
-    }
-
-    @Override
-    public void stream(AIRequest request, Consumer<String> tokenHandler) {
-        throw new UnsupportedOperationException("LMStudio streaming coming in v1.0");
-    }
-
-    @Override
-    public List<String> getModels() {
-        throw new UnsupportedOperationException("LMStudio getModels coming in v1.0");
+        super("http://127.0.0.1:1234/v1",
+                model != null && !model.isEmpty() ? model : "meta-llama-3-8b-instruct",
+                null);
     }
 }
-

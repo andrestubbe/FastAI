@@ -2,6 +2,9 @@ package fastai.providers;
 
 import fastai.AIProvider;
 import fastai.AIRequest;
+import fastai.AIResponse;
+import fastai.Usage;
+import fastai.ModelRegistry;
 import fastjson.FastJSON;
 import fastjson.FastJsonValue;
 
@@ -27,7 +30,7 @@ public class GeminiClient implements AIProvider {
     }
 
     @Override
-    public String generate(AIRequest request) {
+    public AIResponse generate(AIRequest request) {
         if (apiKey == null || apiKey.isEmpty()) {
             throw new IllegalStateException("Gemini API key is missing");
         }
@@ -38,52 +41,48 @@ public class GeminiClient implements AIProvider {
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
+                .timeout(java.time.Duration.ofSeconds(15))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
         try {
             HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            
+
             if (response.statusCode() != 200) {
                 throw new RuntimeException("Gemini API Error: " + response.statusCode() + " - " + response.body());
             }
 
+            // Save raw response to workspace for debugging
+            try {
+                java.nio.file.Files.writeString(
+                        java.nio.file.Path.of("raw_response.json"),
+                        response.body()
+                );
+            } catch (Exception ignored) {
+            }
+
             try (FastJsonValue doc = FastJSON.parse(response.body())) {
+                String text = "";
                 FastJsonValue textNode = doc.path("candidates[0].content.parts[0].text");
                 if (textNode != null && !textNode.isNull()) {
-                    return unescapeJson(textNode.asString());
+                    text = textNode.asString();
                 }
-                return "";
+
+                FastJsonValue usageNode = doc.path("usageMetadata");
+                int promptTokens = usageNode != null ? usageNode.getInt("promptTokenCount", 0) : 0;
+                int completionTokens = usageNode != null ? usageNode.getInt("candidatesTokenCount", 0) : 0;
+                int totalTokens = usageNode != null ? usageNode.getInt("totalTokenCount", 0) : 0;
+                Usage usage = new Usage(promptTokens, completionTokens, totalTokens);
+
+                ModelRegistry.Pricing pricing = ModelRegistry.getPricing(model);
+                double cost = ((double) promptTokens / 1_000_000.0) * pricing.inputPricePerM() +
+                        ((double) completionTokens / 1_000_000.0) * pricing.outputPricePerM();
+
+                return new AIResponse(text, usage, cost);
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Failed to call Gemini API", e);
+            throw new RuntimeException("Failed to call Gemini API: " + e.getMessage(), e);
         }
-    }
-
-    private String unescapeJson(String input) {
-        if (input == null) return null;
-        StringBuilder sb = new StringBuilder();
-        int len = input.length();
-        for (int i = 0; i < len; i++) {
-            char c = input.charAt(i);
-            if (c == '\\' && i + 1 < len) {
-                char next = input.charAt(i + 1);
-                switch (next) {
-                    case '"': sb.append('"'); i++; break;
-                    case '\\': sb.append('\\'); i++; break;
-                    case '/': sb.append('/'); i++; break;
-                    case 'b': sb.append('\b'); i++; break;
-                    case 'f': sb.append('\f'); i++; break;
-                    case 'n': sb.append('\n'); i++; break;
-                    case 'r': sb.append('\r'); i++; break;
-                    case 't': sb.append('\t'); i++; break;
-                    default: sb.append(c); break;
-                }
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
     }
 
     @Override
@@ -106,7 +105,7 @@ public class GeminiClient implements AIProvider {
 
         try {
             HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            
+
             if (response.statusCode() != 200) {
                 throw new RuntimeException("Gemini API Error: " + response.statusCode() + " - " + response.body());
             }
@@ -139,19 +138,33 @@ public class GeminiClient implements AIProvider {
     private String buildJsonRequest(AIRequest request) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        
+
         boolean hasSystem = request.systemPrompt != null && !request.systemPrompt.isEmpty();
-        
+
         if (hasSystem) {
             sb.append("\"systemInstruction\": {\"parts\": [{\"text\": \"")
-              .append(escapeJson(request.systemPrompt))
-              .append("\"}]},");
+                    .append(escapeJson(request.systemPrompt))
+                    .append("\"}]},");
         }
-        
+
         sb.append("\"contents\": [{\"parts\": [{\"text\": \"")
-          .append(escapeJson(request.userPrompt))
-          .append("\"}]}]");
-          
+                .append(escapeJson(request.userPrompt))
+                .append("\"}]}]");
+
+        boolean hasTemp = request.temperature() != null;
+        boolean hasMax = request.maxTokens() != null;
+        if (hasTemp || hasMax) {
+            sb.append(",\"generationConfig\": {");
+            if (hasTemp) {
+                sb.append("\"temperature\": ").append(request.temperature());
+                if (hasMax) sb.append(",");
+            }
+            if (hasMax) {
+                sb.append("\"maxOutputTokens\": ").append(request.maxTokens());
+            }
+            sb.append("}");
+        }
+
         sb.append("}");
         return sb.toString();
     }
@@ -159,10 +172,10 @@ public class GeminiClient implements AIProvider {
     private String escapeJson(String input) {
         if (input == null) return "";
         return input.replace("\\", "\\\\")
-                    .replace("\"", "\\\"")
-                    .replace("\n", "\\n")
-                    .replace("\r", "\\r")
-                    .replace("\t", "\\t");
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
     }
 }
 

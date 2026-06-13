@@ -2,6 +2,8 @@ package fastai.providers;
 
 import fastai.AIProvider;
 import fastai.AIRequest;
+import fastai.AIResponse;
+
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -16,7 +18,7 @@ public class ClaudeClient implements AIProvider {
     }
 
     @Override
-    public String generate(AIRequest request) {
+    public AIResponse generate(AIRequest request) {
         throw new UnsupportedOperationException("Claude implementation coming in v1.0");
     }
 
