@@ -51,13 +51,39 @@ public class GeminiClient implements AIProvider {
             try (FastJsonValue doc = FastJSON.parse(response.body())) {
                 FastJsonValue textNode = doc.path("candidates[0].content.parts[0].text");
                 if (textNode != null && !textNode.isNull()) {
-                    return textNode.asString();
+                    return unescapeJson(textNode.asString());
                 }
                 return "";
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Failed to call Gemini API", e);
         }
+    }
+
+    private String unescapeJson(String input) {
+        if (input == null) return null;
+        StringBuilder sb = new StringBuilder();
+        int len = input.length();
+        for (int i = 0; i < len; i++) {
+            char c = input.charAt(i);
+            if (c == '\\' && i + 1 < len) {
+                char next = input.charAt(i + 1);
+                switch (next) {
+                    case '"': sb.append('"'); i++; break;
+                    case '\\': sb.append('\\'); i++; break;
+                    case '/': sb.append('/'); i++; break;
+                    case 'b': sb.append('\b'); i++; break;
+                    case 'f': sb.append('\f'); i++; break;
+                    case 'n': sb.append('\n'); i++; break;
+                    case 'r': sb.append('\r'); i++; break;
+                    case 't': sb.append('\t'); i++; break;
+                    default: sb.append(c); break;
+                }
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 
     @Override

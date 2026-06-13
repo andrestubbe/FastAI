@@ -212,13 +212,13 @@ FastAI is **zero-dependency** and **zero-allocation** for the core connection la
 Every feature has a standalone example in `examples/`:
 
 ```bash
-cd examples/00-basic-usage
+cd examples/Demo
 mvn compile exec:java    # Run demo
 ```
 
 | Example          | Demonstrates                  |
 |------------------|-------------------------------|
-| `00-basic-usage` | Local AI, Cloud AI, Streaming |
+| `Demo`           | Local AI, Cloud AI, Streaming |
 
 ---
 
@@ -249,9 +249,9 @@ mvn compile exec:java    # Run demo
 
 | Platform      | Status            |
 |---------------|-------------------|
-| Windows 10/11 | ✔️ Fully Supported |
-| Linux         | ✔️ Fully Supported |
-| macOS         | ✔️ Fully Supported |
+| Windows 10/11 | ✅ Fully Supported |
+| Linux         | 🚧 Planned        |
+| macOS         | 🚧 Planned        |
 
 ---
 

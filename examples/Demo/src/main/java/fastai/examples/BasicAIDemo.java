@@ -36,8 +36,31 @@ public class BasicAIDemo {
         } else {
             System.out.println("Note: GEMINI_API_KEY not set. Skipping Gemini AI demo.");
         }
+        // Local AI (Ollama)
+        System.out.println("2. Local AI (Ollama)");
+        try {
+            AI ollamaAI = FastAI.connect("ollama");
+            java.util.List<String> ollamaModels = ollamaAI.getModels();
+            if (!ollamaModels.isEmpty()) {
+                System.out.println("Available Ollama Models:");
+                for (String m : ollamaModels) {
+                    System.out.println(" - " + m);
+                }
+                System.out.println();
+                // Connect with the first model found
+                String firstModel = ollamaModels.get(0);
+                System.out.println("Connecting to model '" + firstModel + "'...");
+                AI ollamaModelAI = FastAI.connect("ollama:" + firstModel);
+                String response = ollamaModelAI.ask("Explain Java in one sentence.");
+                System.out.println("Response: " + response);
+            } else {
+                System.out.println("No local models found in Ollama.");
+            }
+        } catch (Exception e) {
+            System.out.println("Note: Ollama is not running locally or failed: " + e.getMessage());
+        }
+
         System.out.println();
         System.out.println("Demo complete!");
-        System.out.println("\nSupported providers: ollama, lmstudio, openai, claude, mistral, deepseek");
     }
 }
