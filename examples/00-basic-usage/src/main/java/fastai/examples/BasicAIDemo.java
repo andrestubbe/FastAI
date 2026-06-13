@@ -28,16 +28,37 @@ public class BasicAIDemo {
         }
         System.out.println();
         
-        // Example 2: Cloud AI (requires API key)
+        // Example 2: Cloud AI (OpenAI) - requires OPENAI_API_KEY env variable
         System.out.println("2. Cloud AI (OpenAI) - requires OPENAI_API_KEY env variable");
         String apiKey = System.getenv("OPENAI_API_KEY");
         if (apiKey != null && !apiKey.isEmpty()) {
             AI cloudAI = FastAI.connect("openai:gpt-4o", apiKey);
-            String response = cloudAI.ask("What is the capital of France?");
-            System.out.println("Response: " + response);
+            try {
+                String response = cloudAI.ask("What is the capital of France?");
+                System.out.println("Response: " + response);
+            } catch (Exception e) {
+                System.out.println("OpenAI test failed: " + e.getMessage());
+            }
         } else {
             System.out.println("Note: OPENAI_API_KEY not set. Skipping cloud AI demo.");
             System.out.println("      Set your API key to test cloud providers.");
+        }
+        System.out.println();
+        
+        // Example 2.1: Cloud AI (Gemini) - requires GEMINI_API_KEY env variable
+        System.out.println("2.1. Cloud AI (Gemini) - requires GEMINI_API_KEY env variable");
+        String geminiKey = System.getenv("GEMINI_API_KEY");
+        if (geminiKey != null && !geminiKey.isEmpty()) {
+            AI geminiAI = FastAI.connect("gemini:gemini-1.5-flash", geminiKey);
+            try {
+                String response = geminiAI.ask("Explain Java in one sentence.");
+                System.out.println("Response: " + response);
+            } catch (Exception e) {
+                System.out.println("Gemini test failed: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Note: GEMINI_API_KEY not set. Skipping Gemini AI demo.");
+            System.out.println("      Set your API key to test Gemini.");
         }
         System.out.println();
         

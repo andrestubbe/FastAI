@@ -9,7 +9,7 @@
     <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>FastAIService</name>
+    <name>FastAI</name>
     <description>Unified, Zero-Bloat Java AI Client for Local and Cloud Models</description>
     <url>https://github.com/andrestubbe/fastaiservice</url>
 
