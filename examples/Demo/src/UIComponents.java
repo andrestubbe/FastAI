@@ -11,7 +11,7 @@ public class UIComponents {
     public final MouseDispatcher mouseDispatcher = new MouseDispatcher();
 
     public void init(AppState state, ProviderService providerService) {
-        providerDropdown = new Dropdown(12, state.baseRow + 1, 30, state.providers, idx -> {
+        providerDropdown = new Dropdown(0, state.baseRow + 1, UIConfig.DROPDOWN_WIDTH, state.providers, idx -> {
             state.selectedProvider = state.providers.get(idx);
             state.models = providerService.loadModels(state.selectedProvider, apiKeyTextBox.getText());
             state.selectedModel = state.models.get(0);
@@ -25,26 +25,27 @@ public class UIComponents {
             }
             updateFocusStates(state);
         });
-        providerDropdown.setNormalBg(-1);
-        providerDropdown.setHoverBg(0x27272A);
+        providerDropdown.setNormalBg(UIConfig.COLOR_DEFAULT_BG);
+        providerDropdown.setHoverBg(UIConfig.COLOR_HOVER_BG);
 
-        modelDropdown = new Dropdown(12, state.baseRow + 2, 30, state.models, idx -> {
+        modelDropdown = new Dropdown(0, state.baseRow + 2, UIConfig.DROPDOWN_WIDTH, state.models, idx -> {
             if (state.models != null && idx >= 0 && idx < state.models.size()) {
                 state.selectedModel = state.models.get(idx);
+                providerService.selectModel(state, state.selectedProvider, state.selectedModel);
             }
         });
-        modelDropdown.setNormalBg(-1);
-        modelDropdown.setHoverBg(0x27272A);
+        modelDropdown.setNormalBg(UIConfig.COLOR_DEFAULT_BG);
+        modelDropdown.setHoverBg(UIConfig.COLOR_HOVER_BG);
 
-        apiKeyTextBox = new TextBox(12, state.baseRow + 3, state.cols - 14);
-        apiKeyTextBox.setBgColor(-1);
+        apiKeyTextBox = new TextBox(0, state.baseRow + 3, state.cols - 2);
+        apiKeyTextBox.setBgColor(UIConfig.COLOR_DEFAULT_BG);
         apiKeyTextBox.setMasked(true);
         String envKey = System.getenv("GEMINI_API_KEY");
         if (envKey != null && !envKey.isEmpty()) {
             apiKeyTextBox.setText(envKey);
         }
 
-        promptTextBox = new TextBox(12, state.baseRow + 3, state.cols - 14);
+        promptTextBox = new TextBox(0, state.baseRow + 3, state.cols - 2);
         promptTextBox.setFocused(true);
 
         updatePositions(state);

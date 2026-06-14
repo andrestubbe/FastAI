@@ -11,8 +11,8 @@ public class AppState {
 
     public volatile Stage stage = Stage.INPUT;
 
-    public volatile String selectedProvider = "Ollama";
-    public volatile String selectedModel = "";
+    public volatile String selectedProvider = "-";
+    public volatile String selectedModel = "-";
     public volatile String promptText = "";
     public volatile String responseText = "";
     public volatile String tokensText = "";
@@ -28,6 +28,8 @@ public class AppState {
     public final LinkedBlockingQueue<KeyEvent> keyQueue = new LinkedBlockingQueue<>();
 
     public int focusedIndex = 2; // 0 = Provider, 1 = Model, 2 = API Key / Prompt, 3 = Prompt (when Gemini is selected)
+
+    public volatile int modelLoadingProgress = -1; // -1 = idle, -2 = indeterminate, 0-100 = percentage
 
     public static record KeyEvent(int vKey, char keyChar) {
     }

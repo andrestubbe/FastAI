@@ -51,3 +51,7 @@ build/
 *.zip
 *.tar.gz
 *.rar
+
+# Local GGUF/ONNX Models
+models/
+examples/Demo/models/

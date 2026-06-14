@@ -32,16 +32,27 @@ public class Demo2 {
         uiRenderer = new UIRenderer();
         aiExecutor = new AIExecutor();
 
-        state.providers = List.of("Ollama", "Gemini", "LM Studio");
-        state.models = List.of("loading...");
+        state.providers = List.of("-", "Ollama", "Gemini", "LM Studio", "llama.cpp");
+        state.models = List.of("-");
 
         initTerminal();
         initRenderer();
         ui.init(state, providerService);
 
-        state.models = providerService.loadModels(state.selectedProvider, ui.apiKeyTextBox.getText());
-        state.selectedModel = state.models.get(0);
-        ui.modelDropdown.setOptions(state.models);
+        new Thread(() -> {
+            if (!"-".equals(state.selectedProvider)) {
+                try {
+                    List<String> initialModels = providerService.loadModels(state.selectedProvider, ui.apiKeyTextBox.getText());
+                    if (initialModels != null && !initialModels.isEmpty()) {
+                        state.models = initialModels;
+                        state.selectedModel = initialModels.get(0);
+                        ui.modelDropdown.setSelectedIndex(0);
+                        ui.modelDropdown.setOptions(initialModels);
+                    }
+                } catch (Throwable ignored) {
+                }
+            }
+        }).start();
 
         ui.updatePositions(state);
         ui.updateFocusStates(state);
@@ -353,12 +364,12 @@ public class Demo2 {
 
             long elapsed = System.currentTimeMillis() - t0;
             long sleep = Math.max(0, (1000 / 60) - elapsed);
-            if (state.spinnerRunning) sleep = Math.min(sleep, 80);
+            if (state.spinnerRunning || state.modelLoadingProgress != -1) sleep = Math.min(sleep, 80);
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException ignored) {
             }
-            if (state.spinnerRunning) state.spinIdx++;
+            if (state.spinnerRunning || state.modelLoadingProgress != -1) state.spinIdx++;
         }
     }
 }

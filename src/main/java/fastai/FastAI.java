@@ -19,6 +19,7 @@ public final class FastAI {
         AIProvider impl = switch (provider) {
             case "ollama" -> new OllamaClient(model);
             case "lmstudio" -> new LMStudioClient(model);
+            case "llamacpp", "llama.cpp" -> new LlamaCppClient(model);
             case "openai" -> new OpenAIClient(model, argOrNull(args, 0));
             case "claude" -> new ClaudeClient(model, argOrNull(args, 0));
             case "mistral" -> new MistralClient(model, argOrNull(args, 0));

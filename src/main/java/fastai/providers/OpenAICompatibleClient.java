@@ -173,7 +173,19 @@ public class OpenAICompatibleClient implements AIProvider {
                         if (modelObj != null) {
                             FastJsonValue idVal = modelObj.path("id");
                             if (idVal != null && !idVal.isNull()) {
-                                modelsList.add(idVal.asString());
+                                String modelId = idVal.asString();
+                                if (modelId != null) {
+                                    String normId = modelId;
+                                    int colonIdx = normId.indexOf(" :");
+                                    if (colonIdx != -1) {
+                                        normId = normId.substring(0, colonIdx).trim();
+                                    } else {
+                                        normId = normId.trim();
+                                    }
+                                    if (!normId.toLowerCase().contains("embed") && !modelsList.contains(normId)) {
+                                        modelsList.add(normId);
+                                    }
+                                }
                             }
                         }
                     }
