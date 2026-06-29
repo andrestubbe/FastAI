@@ -117,25 +117,67 @@ public class OpenAICompatibleClient implements AIProvider {
                     String cleanLine = line.trim();
                     if (cleanLine.startsWith("data:")) {
                         String data = cleanLine.substring(5).trim();
-                        if (data.equals("[DONE]")) {
+                        if (data.isEmpty() || data.equals("[DONE]")) {
                             return;
                         }
-                        try (FastJsonValue doc = FastJSON.parse(data)) {
-                            // Extract token content
-                            FastJsonValue deltaNode = doc.path("choices[0].delta.content");
-                            if (deltaNode != null && !deltaNode.isNull()) {
-                                tokenHandler.accept(deltaNode.asString());
+                        
+                        try {
+                            // Extract token content manually to avoid native crash on
+                            // incomplete UTF-8 sequences split across SSE chunks
+                            int contentIdx = data.indexOf("\"content\":");
+                            if (contentIdx != -1) {
+                                int startQuote = data.indexOf("\"", contentIdx + 10);
+                                if (startQuote != -1) {
+                                    int endQuote = startQuote + 1;
+                                    boolean escaped = false;
+                                    while (endQuote < data.length()) {
+                                        char c = data.charAt(endQuote);
+                                        if (c == '\\' && !escaped) {
+                                            escaped = true;
+                                        } else if (c == '"' && !escaped) {
+                                            break;
+                                        } else {
+                                            escaped = false;
+                                        }
+                                        endQuote++;
+                                    }
+                                    if (endQuote < data.length()) {
+                                        String token = data.substring(startQuote + 1, endQuote);
+                                        // Unescape basic json
+                                        token = token.replace("\\\"", "\"").replace("\\n", "\n").replace("\\\\", "\\");
+                                        tokenHandler.accept(token);
+                                    }
+                                }
                             }
 
                             // Extract usage statistics if provided (typically in the final chunk)
-                            FastJsonValue usageNode = doc.path("usage");
-                            if (usageNode != null && !usageNode.isNull() && usageHandler != null) {
-                                int promptTokens = usageNode.getInt("prompt_tokens", 0);
-                                int completionTokens = usageNode.getInt("completion_tokens", 0);
-                                int totalTokens = usageNode.getInt("total_tokens", 0);
-                                usageHandler.accept(new Usage(promptTokens, completionTokens, totalTokens));
+                            if (data.contains("\"usage\":")) {
+                                int usageIdx = data.indexOf("\"usage\":");
+                                String usageStr = data.substring(usageIdx);
+                                int ptIdx = usageStr.indexOf("\"prompt_tokens\":");
+                                int ctIdx = usageStr.indexOf("\"completion_tokens\":");
+                                int ttIdx = usageStr.indexOf("\"total_tokens\":");
+                                
+                                if (ptIdx != -1 && ctIdx != -1 && ttIdx != -1) {
+                                    int ptEnd = usageStr.indexOf(',', ptIdx);
+                                    int ctEnd = usageStr.indexOf(',', ctIdx);
+                                    int ttEnd = usageStr.indexOf('}', ttIdx);
+                                    if (ptEnd == -1) ptEnd = usageStr.indexOf('}', ptIdx);
+                                    if (ctEnd == -1) ctEnd = usageStr.indexOf('}', ctIdx);
+                                    
+                                    try {
+                                        int pt = Integer.parseInt(usageStr.substring(ptIdx + 16, ptEnd).trim());
+                                        int ct = Integer.parseInt(usageStr.substring(ctIdx + 20, ctEnd).trim());
+                                        int tt = Integer.parseInt(usageStr.substring(ttIdx + 15, ttEnd).trim());
+                                        Usage usage = new Usage(pt, ct, tt);
+                                        if (usageHandler != null) {
+                                            usageHandler.accept(usage);
+                                        }
+                                    } catch (Exception ignored) {}
+                                }
                             }
-                        } catch (Exception ignored) {
+                        } catch (Exception e) {
+                            // Ignore incomplete chunks
                         }
                     }
                 });

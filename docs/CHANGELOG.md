@@ -17,6 +17,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Multimodal support enhancements
 - Performance optimizations for high-throughput scenarios
 
+## [0.1.1] - 2026-06-29
+
+### Fixed
+- Replaced FastJSON with robust manual string parsing in OpenAICompatibleClient for SSE streaming chunks to avoid EXCEPTION_ACCESS_VIOLATION caused by fragmented UTF-8 sequences.
 ## [0.1.0] - 2026-05-23
 
 ### Added
