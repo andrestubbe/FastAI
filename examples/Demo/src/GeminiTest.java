@@ -21,7 +21,7 @@ public class GeminiTest {
             }
 
             // Defaults to gemini-1.5-flash as the standard low-cost flash model
-            String model = "gemini-1.5-flash";
+            String model = "gemini-2.5-flash";
             if (args.length > 0) {
                 model = args[0];
             }

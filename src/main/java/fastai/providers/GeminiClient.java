@@ -13,11 +13,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class GeminiClient implements AIProvider {
+
+    private static final Path LOG_FILE = Path.of("fastai-errors.log");
 
     private final String model;
     private final String apiKey;
@@ -27,6 +32,24 @@ public class GeminiClient implements AIProvider {
         this.model = model != null && !model.isEmpty() ? model : "gemini-1.5-flash";
         this.apiKey = apiKey;
         this.httpClient = HttpClient.newBuilder().build();
+    }
+
+    private void logError(String message, Throwable t) {
+        StringBuilder entry = new StringBuilder("[GeminiClient] ").append(message).append("\n");
+        if (t != null) {
+            entry.append(t.toString()).append("\n");
+            for (StackTraceElement ste : t.getStackTrace()) {
+                entry.append("    at ").append(ste).append("\n");
+            }
+            if (t.getCause() != null) {
+                entry.append("Caused by: ").append(t.getCause()).append("\n");
+            }
+        }
+        entry.append("\n");
+        try {
+            Files.writeString(LOG_FILE, entry.toString(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException ignored) {
+        }
     }
 
     @Override
@@ -81,13 +104,49 @@ public class GeminiClient implements AIProvider {
                 return new AIResponse(text, usage, cost);
             }
         } catch (IOException | InterruptedException e) {
+            logError("Failed to call Gemini API (generate)", e);
             throw new RuntimeException("Failed to call Gemini API: " + e.getMessage(), e);
         }
     }
 
     @Override
     public void stream(AIRequest request, Consumer<String> tokenHandler) {
-        throw new UnsupportedOperationException("Streaming not yet implemented for Gemini in this iteration");
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new IllegalStateException("Gemini API key is missing");
+        }
+
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
+        String jsonBody = buildJsonRequest(request);
+
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .timeout(java.time.Duration.ofSeconds(30))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        try {
+            HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("Gemini API Error: " + response.statusCode() + " - " + response.body());
+            }
+
+            try (FastJsonValue doc = FastJSON.parse(response.body())) {
+                String text = "";
+                FastJsonValue textNode = doc.path("candidates[0].content.parts[0].text");
+                if (textNode != null && !textNode.isNull()) {
+                    text = textNode.asString();
+                }
+                if (text != null && !text.isEmpty()) {
+                    tokenHandler.accept(text);
+                } else {
+                    tokenHandler.accept("[No response from Gemini]");
+                }
+            }
+        } catch (IOException | InterruptedException e) {
+            logError("Failed to call Gemini API (stream)", e);
+            throw new RuntimeException("Failed to call Gemini API: " + e.getMessage(), e);
+        }
     }
 
     @Override

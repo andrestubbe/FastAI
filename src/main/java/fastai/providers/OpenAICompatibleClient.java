@@ -9,14 +9,21 @@ import fastjson.FastJSON;
 import fastjson.FastJsonValue;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class OpenAICompatibleClient implements AIProvider {
 
@@ -40,7 +47,7 @@ public class OpenAICompatibleClient implements AIProvider {
         HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
-                .timeout(java.time.Duration.ofSeconds(15))
+                .timeout(Duration.ofSeconds(300))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
         if (apiKey != null && !apiKey.isEmpty()) {
@@ -75,7 +82,7 @@ public class OpenAICompatibleClient implements AIProvider {
                 return new AIResponse(text, usage, cost);
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Failed to call API at " + url, e);
+            throw new RuntimeException("Failed to call API at " + url + " - Cause: " + e.getMessage(), e);
         }
     }
 
@@ -88,12 +95,12 @@ public class OpenAICompatibleClient implements AIProvider {
     public void stream(AIRequest request, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
         String url = baseUrl + "/chat/completions";
         // Build request with stream: true and stream_options to request usage token information
-        String jsonBody = buildJsonRequest(request).replace("\"stream\": false", "\"stream\": true");
+        String jsonBody = buildJsonRequest(request).replace("\"stream\": false", "\"stream\": true, \"stream_options\": {\"include_usage\": true}");
 
         HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
-                .timeout(java.time.Duration.ofSeconds(30))
+                .timeout(Duration.ofSeconds(300))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
         if (apiKey != null && !apiKey.isEmpty()) {
@@ -103,16 +110,19 @@ public class OpenAICompatibleClient implements AIProvider {
         HttpRequest httpRequest = builder.build();
 
         try {
-            HttpResponse<java.util.stream.Stream<String>> response = httpClient.send(
+            try { Files.write(Paths.get("C:\\Users\\andre\\fastbot_debug.log"), ("\n=== NEW REQUEST ===\nURL: " + url + "\nBODY: " + jsonBody + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); } catch(Exception ignored){}
+            HttpResponse<Stream<String>> response = httpClient.send(
                     httpRequest,
                     HttpResponse.BodyHandlers.ofLines()
             );
 
             if (response.statusCode() != 200) {
-                throw new RuntimeException("API Stream Error: " + response.statusCode());
+                String err = "API Stream Error: " + response.statusCode();
+                try { Files.write(Paths.get("C:\\Users\\andre\\fastbot_debug.log"), ("HTTP ERROR: " + response.statusCode() + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); } catch(Exception ignored){}
+                throw new RuntimeException(err);
             }
 
-            try (java.util.stream.Stream<String> lines = response.body()) {
+            try (Stream<String> lines = response.body()) {
                 lines.forEach(line -> {
                     String cleanLine = line.trim();
                     if (cleanLine.startsWith("data:")) {
@@ -122,6 +132,7 @@ public class OpenAICompatibleClient implements AIProvider {
                         }
                         
                         try {
+                            try { Files.write(Paths.get("debug_stream.log"), (data + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); } catch(Exception ignored){}
                             // Extract token content manually to avoid native crash on
                             // incomplete UTF-8 sequences split across SSE chunks
                             int contentIdx = data.indexOf("\"content\":");
@@ -145,6 +156,24 @@ public class OpenAICompatibleClient implements AIProvider {
                                         String token = data.substring(startQuote + 1, endQuote);
                                         // Unescape basic json
                                         token = token.replace("\\\"", "\"").replace("\\n", "\n").replace("\\\\", "\\");
+                                        // Unescape unicode \\uXXXX
+                                        if (token.contains("\\u")) {
+                                            StringBuilder sb = new StringBuilder();
+                                            int i = 0;
+                                            while (i < token.length()) {
+                                                if (token.charAt(i) == '\\' && i + 5 < token.length() && token.charAt(i + 1) == 'u') {
+                                                    try {
+                                                        int code = Integer.parseInt(token.substring(i + 2, i + 6), 16);
+                                                        sb.append((char) code);
+                                                        i += 6;
+                                                        continue;
+                                                    } catch (NumberFormatException ignored) {}
+                                                }
+                                                sb.append(token.charAt(i));
+                                                i++;
+                                            }
+                                            token = sb.toString();
+                                        }
                                         tokenHandler.accept(token);
                                     }
                                 }
@@ -183,6 +212,11 @@ public class OpenAICompatibleClient implements AIProvider {
                 });
             }
         } catch (IOException | InterruptedException e) {
+            try { 
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                Files.write(Paths.get("C:\\Users\\andre\\fastbot_debug.log"), ("EXCEPTION: " + e.getMessage() + "\n" + sw.toString() + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); 
+            } catch(Exception ignored){}
             throw new RuntimeException("Failed to call API stream at " + url, e);
         }
     }
@@ -266,8 +300,6 @@ public class OpenAICompatibleClient implements AIProvider {
         }
 
         sb.append("\"stream\": false");
-        // Request token usage metrics inside event stream for OpenAI API
-        sb.append(",\"stream_options\": {\"include_usage\": true}");
         sb.append("}");
         return sb.toString();
     }

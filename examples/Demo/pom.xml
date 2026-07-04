@@ -17,7 +17,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <exec.mainClass>fastai.examples.BasicAIDemo</exec.mainClass>
+        <exec.mainClass>Demo</exec.mainClass>
     </properties>
 
     <repositories>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
             <artifactId>fastai</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.2</version>
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
@@ -46,6 +46,11 @@
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
             <artifactId>FastTUI</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.andrestubbe</groupId>
+            <artifactId>FastAIMemory</artifactId>
             <version>0.1.1</version>
         </dependency>
     </dependencies>

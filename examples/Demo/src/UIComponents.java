@@ -45,7 +45,7 @@ public class UIComponents {
             apiKeyTextBox.setText(envKey);
         }
 
-        promptTextBox = new TextBox(0, state.baseRow + 3, state.cols - 2);
+        promptTextBox = new TextBox(4, state.baseRow + 3, Math.max(16, state.cols - 6));
         promptTextBox.setFocused(true);
 
         updatePositions(state);
@@ -55,6 +55,8 @@ public class UIComponents {
     public void updatePositions(AppState state) {
         providerDropdown.setY(state.baseRow + 1);
         modelDropdown.setY(state.baseRow + 2);
+        promptTextBox.setX(4);
+        promptTextBox.setWidth(Math.max(16, state.cols - 6));
         if (state.isCloudProvider()) {
             apiKeyTextBox.setY(state.baseRow + 3);
             apiKeyTextBox.setVisible(true);

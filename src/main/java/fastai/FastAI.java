@@ -57,6 +57,16 @@ public final class FastAI {
             }
 
             @Override
+            public void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler) {
+                provider.stream(AIRequest.of(systemPrompt, userPrompt), tokenHandler);
+            }
+
+            @Override
+            public void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
+                provider.stream(AIRequest.of(systemPrompt, userPrompt), tokenHandler, usageHandler);
+            }
+
+            @Override
             public List<String> getModels() {
                 return provider.getModels();
             }

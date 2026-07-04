@@ -2,11 +2,14 @@ import fastterminal.FastTerminal;
 import fastterminal.FastTerminalRenderer;
 import fastterminal.FastTerminalScene;
 import fastansi.FastANSI;
+import fastaimemory.ConversationHistory;
+import fastaimemory.MemoryContextBuilder;
+import fastaimemory.PlainTextFormatter;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Demo2 {
+public class Demo {
 
     private static final int KEY_ENTER = 0x0D;
     private static final int KEY_UP = 0x26;
@@ -22,6 +25,9 @@ public class Demo2 {
     private static FastTerminalRenderer renderer;
     private static FastTerminalScene bgScene;
     private static FastTerminalScene canvas;
+    private static ConversationHistory history;
+    private static MemoryContextBuilder memoryBuilder;
+    private static final String SYSTEM_PROMPT = "You are a helpful AI assistant.";
     private static final AtomicBoolean logicDone = new AtomicBoolean(false);
     private static final boolean[] hasSnapshot = {false};
 
@@ -31,6 +37,9 @@ public class Demo2 {
         ui = new UIComponents();
         uiRenderer = new UIRenderer();
         aiExecutor = new AIExecutor();
+        history = new ConversationHistory();
+        history.system(SYSTEM_PROMPT);
+        memoryBuilder = new MemoryContextBuilder(new PlainTextFormatter());
 
         state.providers = List.of("-", "Ollama", "Gemini", "LM Studio", "llama.cpp");
         state.models = List.of("-");
@@ -163,11 +172,41 @@ public class Demo2 {
     private static void startLogicThread() {
         Thread logicThread = new Thread(() -> {
             try {
-                while (state.stage == AppState.Stage.INPUT) {
-                    AppState.KeyEvent event = state.keyQueue.take();
-                    handleInputKey(event);
+                while (true) {
+                    while (state.stage == AppState.Stage.INPUT) {
+                        AppState.KeyEvent event = state.keyQueue.take();
+                        handleInputKey(event);
+                    }
+
+                    if (state.stage == AppState.Stage.LOADING) {
+                        logicDone.set(false);
+                        String promptContext = memoryBuilder.build(history);
+                        aiExecutor.runAsync(promptContext, state, ui, history, () -> logicDone.set(true));
+                        while (!logicDone.get()) {
+                            Thread.sleep(50);
+                        }
+
+                        // After the AI finished, leave the response visible but position the prompt below it
+                        if (state.stage == AppState.Stage.RESULT || state.stage == AppState.Stage.ERROR) {
+                            try {
+                                int initialPromptY = state.isCloudProvider() ? state.baseRow + 4 : state.baseRow + 3;
+                                int nextPromptY = initialPromptY;
+                                int maxW = Math.max(1, state.cols - 2);
+                                for (AppState.ConversationTurn turn : state.completedTurns) {
+                                    String[] promptLines = TextUtils.wrap(turn.userPrompt(), maxW);
+                                    String[] respLines = TextUtils.wrap(turn.responseText(), maxW);
+                                    int blockHeight = Math.max(1, promptLines.length) + Math.max(1, respLines.length);
+                                    nextPromptY += blockHeight;
+                                }
+                                nextPromptY = Math.min(nextPromptY, Math.max(state.baseRow + 1, state.rows - 2));
+                                ui.promptTextBox.setY(nextPromptY);
+                            } catch (Throwable ignored) {
+                            }
+                            state.stage = AppState.Stage.INPUT;
+                            ui.updateFocusStates(state);
+                        }
+                    }
                 }
-                aiExecutor.runAsync(state, ui, () -> logicDone.set(true));
             } catch (Throwable t) {
                 state.errorText = t.getMessage();
                 state.stage = AppState.Stage.ERROR;
@@ -271,7 +310,10 @@ public class Demo2 {
             } else if ((!showKey && state.focusedIndex == 2) || (showKey && state.focusedIndex == 3)) {
                 state.promptText = ui.promptTextBox.getText();
                 if (state.promptText != null && !state.promptText.trim().isEmpty()) {
+                    history.user(state.promptText);
+                    state.responseText = "";
                     state.stage = AppState.Stage.LOADING;
+                    ui.promptTextBox.setText("");
                 }
             }
         } else {

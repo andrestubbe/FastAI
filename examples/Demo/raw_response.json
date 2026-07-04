@@ -4,7 +4,7 @@
       "content": {
         "parts": [
           {
-            "text": "Hi there! How can I help you today?"
+            "text": "I do not have a name. I am a large language model, trained by Google."
           }
         ],
         "role": "model"
@@ -14,18 +14,18 @@
     }
   ],
   "usageMetadata": {
-    "promptTokenCount": 1,
-    "candidatesTokenCount": 10,
-    "totalTokenCount": 39,
+    "promptTokenCount": 4,
+    "candidatesTokenCount": 18,
+    "totalTokenCount": 55,
     "promptTokensDetails": [
       {
         "modality": "TEXT",
-        "tokenCount": 1
+        "tokenCount": 4
       }
     ],
-    "thoughtsTokenCount": 28,
+    "thoughtsTokenCount": 33,
     "serviceTier": "standard"
   },
   "modelVersion": "gemini-2.5-flash",
-  "responseId": "w54tavLvD5KBxs0P0Z_mgAg"
+  "responseId": "xidGarLoAdD3xN8PzqC9oQE"
 }

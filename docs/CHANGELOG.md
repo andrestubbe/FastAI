@@ -17,6 +17,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Multimodal support enhancements
 - Performance optimizations for high-throughput scenarios
 
+## [0.1.2] - 2026-06-29
+
+### Fixed
+- Fixed fragmented Unicode sequence parsing (`\uXXXX`) during SSE streaming in `OpenAICompatibleClient` (e.g. `\u003c` for `<`).
+- Increased API streaming HTTP timeout from 30 seconds to 300 seconds (5 minutes) to prevent dropping connections when a local LLM takes a long time to warm up.
+
 ## [0.1.1] - 2026-06-29
 
 ### Fixed
