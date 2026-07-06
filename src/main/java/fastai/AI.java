@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface AI {
+public interface AI extends AutoCloseable {
 
     AIResponse generate(AIRequest request);
 
@@ -35,5 +35,10 @@ public interface AI {
     }
 
     List<String> getModels();
+
+    @Override
+    default void close() throws Exception {
+        // default no-op
+    }
 }
 

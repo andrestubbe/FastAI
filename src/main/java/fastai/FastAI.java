@@ -19,7 +19,7 @@ public final class FastAI {
         AIProvider impl = switch (provider) {
             case "ollama" -> new OllamaClient(model);
             case "lmstudio" -> new LMStudioClient(model);
-            case "llamacpp", "llama.cpp" -> new LlamaCppClient(model);
+            case "llamacpp", "llama.cpp", "llama" -> new LlamaCppClient(model);
             case "openai" -> new OpenAIClient(model, argOrNull(args, 0));
             case "claude" -> new ClaudeClient(model, argOrNull(args, 0));
             case "mistral" -> new MistralClient(model, argOrNull(args, 0));
@@ -69,6 +69,13 @@ public final class FastAI {
             @Override
             public List<String> getModels() {
                 return provider.getModels();
+            }
+
+            @Override
+            public void close() throws Exception {
+                if (provider instanceof AutoCloseable) {
+                    ((AutoCloseable) provider).close();
+                }
             }
         };
     }
