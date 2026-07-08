@@ -103,7 +103,7 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>FastJSON</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
 </dependency>
 
 <!-- FastCore (Required Native Loader) -->
@@ -138,7 +138,7 @@ repositories {
 
 dependencies {
     implementation 'com.github.andrestubbe:fastai:0.1.3'
-    implementation 'com.github.andrestubbe:FastJSON:0.1.0'
+    implementation 'com.github.andrestubbe:FastJSON:0.1.2'
     implementation 'com.github.andrestubbe:fastcore:0.1.0'
     implementation 'com.github.andrestubbe:FastString:0.1.0'
     implementation 'com.github.andrestubbe:FastBytes:0.1.0'
