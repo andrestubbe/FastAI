@@ -20,12 +20,8 @@ if errorlevel 1 (
 
 for /f "usebackq delims=" %%i in ("examples\Demo\cp-cli.txt") do set CP=%%i
 
-:: Copy native DLLs to the current working directory so llama.cpp can load its CPU/JNI backends
-copy /Y ..\FastAIModel\build\*.dll . >nul
-
 :: Run with all native/vector flags needed for local inference
-java --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.vector -cp "examples\Demo\target\classes;%CP%" DemoCLI %*
-
-:: Clean up copied DLLs to keep the workspace tidy
-del /Q *.dll
+:: DLLs are loaded directly from FastAIModel\lib - no copying needed
+for /f "usebackq delims=" %%i in (`powershell -NoProfile -Command "(Resolve-Path '..\FastAIModel\lib').Path"`) do set NATIVE_LIB=%%i
+java --enable-native-access=ALL-UNNAMED -Djava.library.path="%NATIVE_LIB%" -cp "examples\Demo\target\classes;%CP%" DemoCLI %*
 
