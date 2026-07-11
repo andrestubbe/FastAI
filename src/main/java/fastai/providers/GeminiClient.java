@@ -85,11 +85,17 @@ public class GeminiClient implements AIProvider {
             }
 
             try (FastJsonValue doc = FastJSON.parse(response.body())) {
-                String text = "";
-                FastJsonValue textNode = doc.path("candidates[0].content.parts[0].text");
-                if (textNode != null && !textNode.isNull()) {
-                    text = textNode.asString();
+                StringBuilder textBuilder = new StringBuilder();
+                FastJsonValue partsArray = doc.path("candidates[0].content.parts");
+                if (partsArray != null && partsArray.isArray()) {
+                    for (int i = 0; i < partsArray.size(); i++) {
+                        FastJsonValue pNode = partsArray.get(i).path("text");
+                        if (pNode != null && !pNode.isNull()) {
+                            textBuilder.append(pNode.asString());
+                        }
+                    }
                 }
+                String text = textBuilder.toString();
 
                 FastJsonValue usageNode = doc.path("usageMetadata");
                 int promptTokens = usageNode != null ? usageNode.getInt("promptTokenCount", 0) : 0;
