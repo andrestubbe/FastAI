@@ -64,7 +64,7 @@ public class GeminiClient implements AIProvider {
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
-                .timeout(java.time.Duration.ofSeconds(15))
+                .timeout(java.time.Duration.ofSeconds(60))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
 
