@@ -1,6 +1,6 @@
-# FastAI 0.1.3 — Unified AI client for Java
+# FastAI 0.1.4 — Unified AI client for Java
 
-[![Status](https://img.shields.io/badge/status-0.1.3-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.3)
+[![Status](https://img.shields.io/badge/status-0.1.4-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.4)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
@@ -96,7 +96,7 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 
 <!-- FastJSON (Required Dependency) -->
@@ -137,7 +137,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:fastai:0.1.3'
+    implementation 'com.github.andrestubbe:fastai:0.1.4'
     implementation 'com.github.andrestubbe:FastJSON:0.1.2'
     implementation 'com.github.andrestubbe:fastcore:0.1.0'
     implementation 'com.github.andrestubbe:FastString:0.1.0'

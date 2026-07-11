@@ -132,7 +132,6 @@ public class OpenAICompatibleClient implements AIProvider {
                         }
                         
                         try {
-                            try { Files.write(Paths.get("debug_stream.log"), (data + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); } catch(Exception ignored){}
                             // Extract token content manually to avoid native crash on
                             // incomplete UTF-8 sequences split across SSE chunks
                             int contentIdx = data.indexOf("\"content\":");
