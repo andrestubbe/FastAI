@@ -149,7 +149,7 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. 🚀 **[fastai-0.1.0.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.0/fastai-0.1.0.jar)** (Core Library)
+1. 🚀 **[fastai-0.1.4.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.4/fastai-0.1.4.jar)** (Core Library)
 2. 📦 **[FastJSON-0.1.0.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.0/FastJSON-0.1.0.jar)** (Required JSON Parser)
 3. ⚙️ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (Mandatory Native JNI Loader)
 4. 📦 **[FastString-0.1.0.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.0/FastString-0.1.0.jar)** (Required String Dependency)
