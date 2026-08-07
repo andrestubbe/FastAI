@@ -14,12 +14,19 @@ public class LlamaCppClient implements AIProvider, AutoCloseable {
     private final String modelPath;
 
     public LlamaCppClient(String modelPath) {
+        this(modelPath, 4096, 0);
+    }
+
+    public LlamaCppClient(String modelPath, int ctxSize) {
+        this(modelPath, ctxSize, 0);
+    }
+
+    public LlamaCppClient(String modelPath, int ctxSize, int gpuLayers) {
         if (modelPath == null || modelPath.isEmpty()) {
             throw new IllegalArgumentException("Model path must be specified for local llama inference");
         }
         this.modelPath = modelPath;
-        // Native local Llama.cpp: 4096 context size, 0 GPU layers (CPU execution)
-        this.model = new FastAIModel(modelPath, 4096, 0);
+        this.model = new FastAIModel(modelPath, ctxSize, gpuLayers);
     }
 
     private String buildPrompt(AIRequest request) {

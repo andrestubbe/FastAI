@@ -19,7 +19,7 @@ public final class FastAI {
         AIProvider impl = switch (provider) {
             case "ollama" -> new OllamaClient(model);
             case "lmstudio" -> new LMStudioClient(model);
-            case "llamacpp", "llama.cpp", "llama" -> new LlamaCppClient(model);
+            case "llamacpp", "llama.cpp", "llama" -> createLlamaCppClient(model, args);
             case "openai" -> new OpenAIClient(model, argOrNull(args, 0));
             case "claude" -> new ClaudeClient(model, argOrNull(args, 0));
             case "mistral" -> new MistralClient(model, argOrNull(args, 0));
@@ -29,6 +29,37 @@ public final class FastAI {
         };
 
         return wrap(impl);
+    }
+
+    private static LlamaCppClient createLlamaCppClient(String modelSpec, String[] args) {
+        if (modelSpec == null) return new LlamaCppClient(null);
+
+        int ctxSize = 4096;
+        int gpuLayers = 0;
+        String modelPath = modelSpec;
+
+        if (modelSpec.contains("?")) {
+            String[] parts = modelSpec.split("\\?", 2);
+            modelPath = parts[0];
+            String queryString = parts[1];
+            for (String param : queryString.split("&")) {
+                String[] kv = param.split("=", 2);
+                if (kv.length == 2) {
+                    if ("ctx".equalsIgnoreCase(kv[0]) || "context".equalsIgnoreCase(kv[0])) {
+                        try { ctxSize = Integer.parseInt(kv[1]); } catch (NumberFormatException ignored) {}
+                    } else if ("gpu".equalsIgnoreCase(kv[0]) || "gpulayers".equalsIgnoreCase(kv[0])) {
+                        try { gpuLayers = Integer.parseInt(kv[1]); } catch (NumberFormatException ignored) {}
+                    }
+                }
+            }
+        } else if (args != null && args.length > 0 && args[0] != null) {
+            try { ctxSize = Integer.parseInt(args[0]); } catch (NumberFormatException ignored) {}
+            if (args.length > 1 && args[1] != null) {
+                try { gpuLayers = Integer.parseInt(args[1]); } catch (NumberFormatException ignored) {}
+            }
+        }
+
+        return new LlamaCppClient(modelPath, ctxSize, gpuLayers);
     }
 
     public static AI auto() {
