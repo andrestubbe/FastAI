@@ -7,25 +7,25 @@ public final class AIRequest {
     public final String systemPrompt;
     public final String userPrompt;
     public final File attachment;
-    
+
     private Double temperature;
     private Integer maxTokens;
 
-    private AIRequest(String systemPrompt, String userPrompt, File attachment) {
+    private AIRequest(final String systemPrompt, final String userPrompt, final File attachment) {
         this.systemPrompt = systemPrompt;
         this.userPrompt = userPrompt;
         this.attachment = attachment;
     }
 
-    public static AIRequest of(String prompt) {
+    public static AIRequest of(final String prompt) {
         return new AIRequest(null, prompt, null);
     }
 
-    public static AIRequest of(String systemPrompt, String userPrompt) {
+    public static AIRequest of(final String systemPrompt, final String userPrompt) {
         return new AIRequest(systemPrompt, userPrompt, null);
     }
 
-    public static AIRequest of(String prompt, File attachment) {
+    public static AIRequest of(final String prompt, final File attachment) {
         return new AIRequest(null, prompt, attachment);
     }
 

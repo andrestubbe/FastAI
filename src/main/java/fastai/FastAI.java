@@ -2,7 +2,6 @@ package fastai;
 
 import fastai.providers.*;
 
-import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -11,7 +10,7 @@ public final class FastAI {
     private FastAI() {
     }
 
-    public static AI connect(String spec, String... args) {
+    public static AI connect(final String spec, final String... args) {
         String[] parts = spec.split(":", 2);
         String provider = parts[0].toLowerCase();
         String model = parts.length > 1 ? parts[1] : null;
@@ -31,7 +30,7 @@ public final class FastAI {
         return wrap(impl);
     }
 
-    private static LlamaCppClient createLlamaCppClient(String modelSpec, String[] args) {
+    private static LlamaCppClient createLlamaCppClient(final String modelSpec, final String[] args) {
         if (modelSpec == null) return new LlamaCppClient(null);
 
         int ctxSize = 4096;
@@ -46,16 +45,28 @@ public final class FastAI {
                 String[] kv = param.split("=", 2);
                 if (kv.length == 2) {
                     if ("ctx".equalsIgnoreCase(kv[0]) || "context".equalsIgnoreCase(kv[0])) {
-                        try { ctxSize = Integer.parseInt(kv[1]); } catch (NumberFormatException ignored) {}
+                        try {
+                            ctxSize = Integer.parseInt(kv[1]);
+                        } catch (NumberFormatException ignored) {
+                        }
                     } else if ("gpu".equalsIgnoreCase(kv[0]) || "gpulayers".equalsIgnoreCase(kv[0])) {
-                        try { gpuLayers = Integer.parseInt(kv[1]); } catch (NumberFormatException ignored) {}
+                        try {
+                            gpuLayers = Integer.parseInt(kv[1]);
+                        } catch (NumberFormatException ignored) {
+                        }
                     }
                 }
             }
         } else if (args != null && args.length > 0 && args[0] != null) {
-            try { ctxSize = Integer.parseInt(args[0]); } catch (NumberFormatException ignored) {}
+            try {
+                ctxSize = Integer.parseInt(args[0]);
+            } catch (NumberFormatException ignored) {
+            }
             if (args.length > 1 && args[1] != null) {
-                try { gpuLayers = Integer.parseInt(args[1]); } catch (NumberFormatException ignored) {}
+                try {
+                    gpuLayers = Integer.parseInt(args[1]);
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
 
@@ -70,43 +81,43 @@ public final class FastAI {
         return args != null && args.length > index ? args[index] : null;
     }
 
-    private static AI wrap(AIProvider provider) {
+    private static AI wrap(final AIProvider provider) {
         return new AI() {
             @Override
-            public AIResponse generate(AIRequest request) {
+            public AIResponse generate(final AIRequest request) {
                 return provider.generate(request);
             }
 
             @Override
-            public void stream(String prompt, Consumer<String> tokenHandler) {
+            public void stream(final String prompt, final Consumer<String> tokenHandler) {
                 provider.stream(AIRequest.of(prompt), tokenHandler);
             }
 
             @Override
-            public void stream(String prompt, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
+            public void stream(final String prompt, final Consumer<String> tokenHandler, final Consumer<Usage> usageHandler) {
                 provider.stream(AIRequest.of(prompt), tokenHandler, usageHandler);
             }
 
             @Override
-            public void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler) {
+            public void stream(final String systemPrompt, final String userPrompt, final Consumer<String> tokenHandler) {
                 provider.stream(AIRequest.of(systemPrompt, userPrompt), tokenHandler);
             }
 
             @Override
-            public void stream(String systemPrompt, String userPrompt, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
+            public void stream(final String systemPrompt, final String userPrompt, final Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
                 provider.stream(AIRequest.of(systemPrompt, userPrompt), tokenHandler, usageHandler);
+            }
+
+            @Override
+            public void close() throws Exception {
+                if (provider instanceof AutoCloseable autoCloseable) {
+                    autoCloseable.close();
+                }
             }
 
             @Override
             public List<String> getModels() {
                 return provider.getModels();
-            }
-
-            @Override
-            public void close() throws Exception {
-                if (provider instanceof AutoCloseable) {
-                    ((AutoCloseable) provider).close();
-                }
             }
         };
     }
