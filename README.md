@@ -207,11 +207,11 @@ ai.stream("Write a poem",System.out::print);
 
 | Provider         | Type  | Status     | Features                               |
 |------------------|-------|------------|----------------------------------------|
-| Gemini           | Cloud | ✔️ Native  | Chat, Streaming, List Models           |
-| OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models           |
 | Ollama           | Local | ✔️ Native  | Chat, Streaming, List Models           |
 | llama.cpp        | Local | ✔️ Native  | GGUF Local Inference (CPU / GPU missing) |
 | LM Studio        | Local | ✔️ Native  | Chat, Streaming via Local API          |
+| Gemini           | Cloud | ✔️ Native  | Chat, Streaming, List Models           |
+| OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models           |
 | OpenAI           | Cloud | ✔️ Native  | Chat, Streaming                        |
 | Anthropic Claude | Cloud | ✔️ Native  | Chat, Streaming                        |
 | Mistral          | Cloud | ✔️ Native  | Chat, Streaming                        |
