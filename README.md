@@ -1,6 +1,6 @@
-# FastAI 0.1.4 — Unified AI client for Java
+# FastAI 0.1.5 — Unified AI client for Java
 
-[![Status](https://img.shields.io/badge/status-0.1.4-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.4)
+[![Status](https://img.shields.io/badge/status-0.1.5-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.5)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
@@ -11,7 +11,7 @@
 **💡 One interface for
 all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
-FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI,
+FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI, OpenRouter,
 Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP
 clients, and bloated frameworks.
 
@@ -46,6 +46,9 @@ cloudAI.stream("Write a novel", token -> System.out.print(token));
 AI localAI = FastAI.connect("ollama:llama3.1");
 System.out.println(localAI.ask("Explain quantum physics simply."));
 
+AI openRouterAI = FastAI.connect("openrouter:anthropic/claude-3.5-sonnet", System.getenv("OPENROUTER_API_KEY"));
+System.out.println(openRouterAI.ask("Explain quantum physics simply."));
+
 AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
 System.out.println(cloudAI.ask("Explain quantum physics simply."));
 ```
@@ -59,20 +62,21 @@ Direct SDKs lock you into one provider.
 
 FastAI solves this by providing:
 
-- **Zero JSON handling**  everything is native Java Strings and Files.
-- **Provider Interchangeability**  switch between `ollama` and `openai` by changing one string.
-- **Zero Dependencies**  pure Java 17+, no Jackson, no Spring.
-- **True Unified Interface**  `AI` is all you need to know.
+- **Zero JSON handling** — everything is native Java Strings and Files.
+- **Provider Interchangeability** — switch between `ollama`, `openrouter`, and `openai` by changing one string.
+- **Zero Dependencies** — pure Java 17+, no Jackson, no Spring.
+- **True Unified Interface** — `AI` is all you need to know.
 
 ---
 
 ## Key Features
 
-- **🌐 Local + Cloud Support**  Use local models or cloud giants with the same code.
-- **📎 Simple Attachments**  Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
-- **🎭 System Prompts**  Native support for System vs User prompts.
-- **⚡ Ultra-Lightweight**  Just drop the JAR into your project.
-- **🌊 Streaming First**  Every provider supports unified streaming callbacks.
+- **🌐 Local + Cloud Support** — Use local models, OpenRouter, or cloud giants with the exact same code.
+- **🔌 OpenRouter Unified Gateway** — Access 200+ models (Claude 3.5, DeepSeek R1, Llama 3.3, GPT-4o) using `openrouter:model/name`.
+- **📎 Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
+- **🎭 System Prompts** — Native support for System vs User prompts.
+- **⚡ Ultra-Lightweight** — Just drop the JAR into your project.
+- **🌊 Streaming First** — Every provider supports unified streaming callbacks.
 
 ---
 
@@ -96,7 +100,7 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
 </dependency>
 
 <!-- FastJSON (Required Dependency) -->
@@ -137,7 +141,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:fastai:0.1.4'
+    implementation 'com.github.andrestubbe:fastai:0.1.5'
     implementation 'com.github.andrestubbe:FastJSON:0.1.2'
     implementation 'com.github.andrestubbe:fastcore:0.1.0'
     implementation 'com.github.andrestubbe:FastString:0.1.0'
@@ -149,7 +153,7 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. 🚀 **[fastai-0.1.4.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.4/fastai-0.1.4.jar)** (Core Library)
+1. 🚀 **[fastai-0.1.5.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.5/fastai-0.1.5.jar)** (Core Library)
 2. 📦 **[FastJSON-0.1.0.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.0/FastJSON-0.1.0.jar)** (Required JSON Parser)
 3. ⚙️ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (Mandatory Native JNI Loader)
 4. 📦 **[FastString-0.1.0.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.0/FastString-0.1.0.jar)** (Required String Dependency)
@@ -168,6 +172,10 @@ Download the latest JARs directly to add them to your classpath:
 // Local Providers
 AI ai = FastAI.connect("ollama:llama3.1");
 AI ai = FastAI.connect("lmstudio:phi3");
+
+// OpenRouter Unified Gateway (200+ models)
+AI ai = FastAI.connect("openrouter:anthropic/claude-3.5-sonnet", "sk-or-...");
+AI ai = FastAI.connect("openrouter:deepseek/deepseek-r1", "sk-or-...");
 
 // Cloud Providers (requires API Key as second argument)
 AI ai = FastAI.connect("openai:gpt-4o", "sk-...");
@@ -202,6 +210,7 @@ ai.stream("Write a poem",System.out::print);
 | Provider         | Type  | Status     | Features             |
 |------------------|-------|------------|----------------------|
 | Gemini           | Cloud | ✔️ Native  | Chat, List Models    |
+| OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models |
 | Ollama           | Local | 🚧 Partial | List Models          |
 | LM Studio        | Local | 🚧 Planned | -                    |
 | OpenAI           | Cloud | 🚧 Planned | -                    |
