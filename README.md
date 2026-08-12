@@ -17,7 +17,7 @@ If you need **a drop-in AI module**, **multi-provider interchangeability**, or *
 
 ---
 
-[![FastFileIndex Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
+[![FastAI Showcase](docs/screenshot.png)](https://youtu.be/kjfyZebSdj4)
 
 ---
 
