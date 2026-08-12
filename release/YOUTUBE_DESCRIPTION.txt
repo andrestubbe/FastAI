@@ -1,7 +1,3 @@
-================================================================================
-YOUTUBE RELEASE: FastAI v0.1.5
-================================================================================
-
 TITLE:
 FastAI v0.1.5: Unified Local & Cloud AI Engine for Java ⚡ (OpenRouter, Ollama, llama.cpp)
 
@@ -30,15 +26,3 @@ Made with ⚡ by Andre Stubbe
 
 TAGS:
 Java, FastJava, FastAI, OpenRouter, Ollama, llamacpp, Gemini, Claude, DeepSeek, OpenAI, AI Client, Java AI, LLM Streaming, DeveloperTools, ReleaseNotes
-
-================================================================================
-YOUTUBE RELEASE: FastAI v0.1.4
-================================================================================
-
-TITLE:
-JVM AI Integration Done Right: FastAI v0.1.4 Released! 🚀
-
-DESCRIPTION:
-FastAI v0.1.4 is now available! This release focuses on performance optimizations, memory footprint reduction, and cleaning up runtime artifact outputs. 
-
-FastAI is a zero-dependency, lightweight, unified AI client interface for Java that connects seamlessly to local (Ollama, Llama.cpp) and cloud models (Gemini, Claude, OpenAI) in under 100ms.
