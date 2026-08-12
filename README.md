@@ -208,7 +208,7 @@ ai.stream("Write a poem",System.out::print);
 | Provider         | Type  | Status     | Features                               |
 |------------------|-------|------------|----------------------------------------|
 | Ollama           | Local | ✔️ Native  | Chat, Streaming, List Models           |
-| llama.cpp        | Local | ✔️ Native  | GGUF Local Inference (CPU / GPU missing) |
+| llama.cpp        | Local | ✔️ Native  | GGUF Local Inference (GPU missing)     |
 | LM Studio        | Local | ✔️ Native  | Chat, Streaming via Local API          |
 | Gemini           | Cloud | ✔️ Native  | Chat, Streaming, List Models           |
 | OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models           |
