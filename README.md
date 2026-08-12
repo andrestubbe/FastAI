@@ -13,28 +13,11 @@
 FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI, OpenRouter.ai, Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP clients, and bloated frameworks.
 
 If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is your solution.
-```java
-cloudAI.stream("Write a novel", token -> System.out.print(token));
-```
+
 
 ---
 
 [![FastFileIndex Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
-
----
-
-## Table of Contents
-
-- [Why FastAI?](#why-fastai)
-- [Key Features](#key-features)
-- [Installation](#installation)
-- [API Reference](#api-reference)
-- [Providers Supported](#providers-supported)
-- [Performance](#performance)
-- [Examples](#examples)
-- [Project Structure](#project-structure)
-- [Roadmap](#roadmap)
-- [License](#license)
 
 ---
 
@@ -50,6 +33,21 @@ System.out.println(openRouterAI.ask("Explain quantum physics simply."));
 AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
 System.out.println(cloudAI.ask("Explain quantum physics simply."));
 ```
+
+---
+
+## Table of Contents
+
+- [Why FastAI?](#why-fastai)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [API Reference](#api-reference)
+- [Providers Supported](#providers-supported)
+- [Performance](#performance)
+- [Examples](#examples)
+- [Project Structure](#project-structure)
+- [Roadmap](#roadmap)
+- [License](#license)
 
 ---
 
