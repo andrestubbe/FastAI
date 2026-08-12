@@ -8,16 +8,14 @@
 
 ---
 
-**💡 One interface for
-all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
+**💡 One interface for all Local and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
-FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI, OpenRouter,
-Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP
-clients, and bloated frameworks.
+FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (Ollama, LM Studio, OpenAI, OpenRouter.ai, Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP clients, and bloated frameworks.
 
-If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is
-your solution.
+If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is your solution.
+```java
 cloudAI.stream("Write a novel", token -> System.out.print(token));
+```
 
 ---
 
