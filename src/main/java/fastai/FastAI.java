@@ -20,6 +20,7 @@ public final class FastAI {
             case "lmstudio" -> new LMStudioClient(model);
             case "llamacpp", "llama.cpp", "llama" -> createLlamaCppClient(model, args);
             case "openai" -> new OpenAIClient(model, argOrNull(args, 0));
+            case "openrouter" -> new OpenRouterClient(model, argOrNull(args, 0));
             case "claude" -> new ClaudeClient(model, argOrNull(args, 0));
             case "mistral" -> new MistralClient(model, argOrNull(args, 0));
             case "deepseek" -> new DeepSeekClient(model, argOrNull(args, 0));

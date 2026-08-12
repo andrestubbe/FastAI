@@ -95,7 +95,7 @@ public class OpenAICompatibleClient implements AIProvider {
     public void stream(AIRequest request, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
         String url = baseUrl + "/chat/completions";
         // Build request with stream: true and stream_options to request usage token information
-        String jsonBody = buildJsonRequest(request).replace("\"stream\": false", "\"stream\": true, \"stream_options\": {\"include_usage\": true}");
+        String jsonBody = buildJsonRequest(request).replace("\"stream\": false", "\"stream\": true");
 
         HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
