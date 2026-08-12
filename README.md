@@ -205,17 +205,17 @@ ai.stream("Write a poem",System.out::print);
 
 ## Providers Supported
 
-| Provider         | Type  | Status     | Features             |
-|------------------|-------|------------|----------------------|
-| Gemini           | Cloud | ✔️ Native  | Chat, List Models    |
-| OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models |
-| Ollama           | Local | 🚧 Partial | List Models          |
-| llama.cpp        | Local | 🚧 Planned | Native GGUF Inference (FastAIModel) |
-| LM Studio        | Local | 🚧 Planned | -                    |
-| OpenAI           | Cloud | 🚧 Planned | -                    |
-| Anthropic Claude | Cloud | 🚧 Planned | -                    |
-| Mistral          | Cloud | 🚧 Planned | -                    |
-| DeepSeek         | Cloud | 🚧 Planned | -                    |
+| Provider         | Type  | Status     | Features                               |
+|------------------|-------|------------|----------------------------------------|
+| Gemini           | Cloud | ✔️ Native  | Chat, Streaming, List Models           |
+| OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models           |
+| Ollama           | Local | ✔️ Native  | Chat, Streaming, List Models           |
+| llama.cpp        | Local | ✔️ Native  | GGUF Local Inference (CPU / GPU missing) |
+| LM Studio        | Local | ✔️ Native  | Chat, Streaming via Local API          |
+| OpenAI           | Cloud | ✔️ Native  | Chat, Streaming                        |
+| Anthropic Claude | Cloud | ✔️ Native  | Chat, Streaming                        |
+| Mistral          | Cloud | ✔️ Native  | Chat, Streaming                        |
+| DeepSeek         | Cloud | ✔️ Native  | Chat, Streaming                        |
 
 ---
 
