@@ -210,6 +210,7 @@ ai.stream("Write a poem",System.out::print);
 | Gemini           | Cloud | ✔️ Native  | Chat, List Models    |
 | OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models |
 | Ollama           | Local | 🚧 Partial | List Models          |
+| llama.cpp        | Local | 🚧 Planned | Native GGUF Inference (FastAIModel) |
 | LM Studio        | Local | 🚧 Planned | -                    |
 | OpenAI           | Cloud | 🚧 Planned | -                    |
 | Anthropic Claude | Cloud | 🚧 Planned | -                    |
