@@ -143,6 +143,7 @@ dependencies {
     implementation 'com.github.andrestubbe:fastcore:0.1.6'
     implementation 'com.github.andrestubbe:FastString:0.1.6'
     implementation 'com.github.andrestubbe:FastBytes:0.1.6'
+    implementation 'com.github.andrestubbe.FastAIModel:fastaimodel-llama:0.1.3'
 }
 ```
 
@@ -151,10 +152,11 @@ dependencies {
 Download the latest JARs directly to add them to your classpath:
 
 1. 🚀 **[fastai-0.1.6.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.6/fastai-0.1.6.jar)** (Core Library)
-2. 📦 **[FastJSON-0.1.6.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.6/FastJSON-0.1.6.jar)** (Required JSON Parser)
-3. ⚙️ **[fastcore-0.1.6.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.6/fastcore-0.1.6.jar)** (Mandatory Native JNI Loader)
-4. 📦 **[FastString-0.1.6.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.6/FastString-0.1.6.jar)** (Required String Dependency)
-5. 📦 **[FastBytes-0.1.6.jar](https://github.com/andrestubbe/FastBytes/releases/download/0.1.6/FastBytes-0.1.6.jar)** (Required Bytes Dependency)
+2. 🤖 **[fastaimodel-llama-0.1.3.jar](https://github.com/andrestubbe/FastAIModel/releases/download/v0.1.3/fastaimodel-llama-0.1.3.jar)** (Local In-Process GPU Engine)
+3. 📦 **[FastJSON-0.1.6.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.6/FastJSON-0.1.6.jar)** (Required JSON Parser)
+4. ⚙️ **[fastcore-0.1.6.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.6/fastcore-0.1.6.jar)** (Mandatory Native JNI Loader)
+5. 📦 **[FastString-0.1.6.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.6/FastString-0.1.6.jar)** (Required String Dependency)
+6. 📦 **[FastBytes-0.1.6.jar](https://github.com/andrestubbe/FastBytes/releases/download/0.1.6/FastBytes-0.1.6.jar)** (Required Bytes Dependency)
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
