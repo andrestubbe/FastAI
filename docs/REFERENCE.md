@@ -1,26 +1,28 @@
-# FastAI Reference
+# FastAI API Reference Manual
 
-## 1. CPU Feature Model
-*   **AVX2** — detected via CPUID. Enables 32-byte vector ops.
-*   **SSE4.2** — detected via CPUID. 16-byte fallback.
-*   **Fallback rule**: AVX2 → SSE4.2 → scalar.
-
-## 2. Guarantees
-*   **Zero-Copy**: All operations use `GetPrimitiveArrayCritical` for direct memory access.
-*   **Unaligned Access**: Safe on all byte boundaries.
-*   **Thread-Safety**: All static native methods are thread-safe.
-
-## 3. JNI & Memory Contracts
-*   **Direct Memory Pinning**: No implicit copies are made by the JNI bridge.
-*   **No Allocation**: All operations work on pre-allocated Java arrays or buffers.
-*   **Critical Sections**: Native calls minimize blocking to prevent GC impact.
-
-## 4. Platform Support
-| Platform | Status |
-|----------|--------|
-| Windows 10/11 (x64) | ✅ Fully Supported |
+`FastAI` is a unified AI client interface for Java, seamlessly integrating local engines (Ollama, LM Studio, FastAIModel) and cloud providers (OpenAI, OpenRouter, Claude, Mistral, DeepSeek).
 
 ---
-**Part of the FastJava Ecosystem** — *Making the JVM faster.*
 
-Made with ⚡ by Andre Stubbe
+## Factory Interface: `fastai.FastAI`
+
+### Connect Methods
+
+- `public static AI connect(String providerSpec)`  
+  Connects to a local model or provider without an API key (e.g. `"llama:models/qwen2.5.gguf"`, `"ollama:llama3.1"`).
+
+- `public static AI connect(String providerSpec, String apiKey)`  
+  Connects to a cloud provider or OpenRouter gateway (e.g. `"openai:gpt-4o"`, `"openrouter:anthropic/claude-3.5-sonnet"`).
+
+---
+
+## Core Interface: `fastai.AI`
+
+- `String ask(String prompt)` — Executes synchronous text generation and returns response.
+- `AI withSystemPrompt(String systemPrompt)` — Configures system persona.
+- `AI withTemperature(float temperature)` — Sets sampling temperature (0.0 to 2.0).
+- `AI withTopP(float topP)` — Sets nucleus sampling ratio (0.0 to 1.0).
+- `AI withTopK(int topK)` — Sets top-k token selection filter.
+- `AI withMaxTokens(int maxTokens)` — Limits maximum generated tokens.
+- `AI withGpu(boolean enabled)` — Toggles GPU offloading for local GGUF models.
+- `void stream(String prompt, TokenCallback callback)` — Streams real-time token output.

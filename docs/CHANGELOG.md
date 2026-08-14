@@ -1,41 +1,9 @@
-# Changelog
+# FastAI Version Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-
-## [Unreleased]
+## [0.1.6] — 2026-08-14
 
 ### Added
-- Initial project structure and documentation
-- Unified AI interface design supporting multiple providers
-- Zero-dependency architecture implementation
-
-### Planned
-- Additional provider integrations (Google Gemini, Anthropic Claude, etc.)
-- Advanced streaming callbacks and token handling
-- Multimodal support enhancements
-- Performance optimizations for high-throughput scenarios
-
-## [0.1.2] - 2026-06-29
-
-### Fixed
-- Fixed fragmented Unicode sequence parsing (`\uXXXX`) during SSE streaming in `OpenAICompatibleClient` (e.g. `\u003c` for `<`).
-- Increased API streaming HTTP timeout from 30 seconds to 300 seconds (5 minutes) to prevent dropping connections when a local LLM takes a long time to warm up.
-
-## [0.1.1] - 2026-06-29
-
-### Fixed
-- Replaced FastJSON with robust manual string parsing in OpenAICompatibleClient for SSE streaming chunks to avoid EXCEPTION_ACCESS_VIOLATION caused by fragmented UTF-8 sequences.
-## [0.1.0] - 2026-05-23
-
-### Added
-- Project initialization
-- Core AI interface implementation
-- Provider support for Ollama, LM Studio, OpenAI, Claude, Mistral, DeepSeek
-- Streaming support for all providers
-- File attachment support for vision models
-- System prompt support
-- Zero-dependency architecture
-- JitPack deployment
-- Comprehensive documentation and examples
+- **FastAIModel In-Process GPU Engine**: Added direct `llama:path/to/model.gguf` provider for zero-IPC local LLM inference via Vulkan & Metal.
+- **Fluent Sampling Control**: Added `.withTemperature()`, `.withTopP()`, `.withTopK()`, `.withMaxTokens()`, `.withSystemPrompt()`, and `.withGpu(true/false)`.
+- **OpenRouter Unified Gateway**: Support for 200+ cloud models with streaming.
+- **Unified Streaming API**: Real-time token callbacks for both local and cloud providers.
