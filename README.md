@@ -46,9 +46,14 @@ public class QuickStartDemo {
                    System.out.flush();
                });
 
-        // Cloud provider instance
+        // Cloud provider instance with identical sampling & streaming interface
         AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
-        System.out.println(cloudAI.ask("Summarize latest tech trends."));
+        cloudAI.withTemperature(0.2f)
+               .withMaxTokens(500)
+               .stream("Summarize the latest 2026 tech trends:", token -> {
+                   System.out.print(token);
+                   System.out.flush();
+               });
     }
 }
 ```
