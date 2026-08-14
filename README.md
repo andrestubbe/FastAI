@@ -195,7 +195,8 @@ Download the latest JARs directly to add them to your classpath:
 ### Connect
 
 ```java
-// Local Providers
+// Local Providers & In-Process GPU Engine
+AI ai = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf"); // Native Vulkan/Metal In-Process GPU Engine
 AI ai = FastAI.connect("ollama:llama3.1");
 AI ai = FastAI.connect("lmstudio:phi3");
 
