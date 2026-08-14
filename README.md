@@ -121,11 +121,11 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
     <version>0.1.6</version>
 </dependency>
 
-<!-- FastBytes (Required Dependency) -->
+<!-- FastAIModel (Local In-Process GPU Engine) -->
 <dependency>
-    <groupId>com.github.andrestubbe</groupId>
-    <artifactId>FastBytes</artifactId>
-    <version>0.1.6</version>
+    <groupId>com.github.andrestubbe.FastAIModel</groupId>
+    <artifactId>fastaimodel-llama</artifactId>
+    <version>0.1.3</version>
 </dependency>
 </dependencies>
 ```
