@@ -29,24 +29,27 @@ import fastai.FastAI;
 
 public class QuickStartDemo {
     public static void main(String[] args) {
-        // Connect to local GPU-accelerated model or cloud provider
-        AI localAI = FastAI.connect("ollama:llama3.1");
+        // 1. Direct Local GGUF Engine with full Vulkan/Metal GPU Offloading (ON)
+        AI gpuAI = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf")
+                         .withGpu(true)        // Full GPU acceleration ON (99 layers)
+                         .withContextSize(2048);
 
-        // Standard ask
-        System.out.println(localAI.ask("Explain quantum physics simply."));
+        // 2. Direct Local GGUF Engine on CPU Only (GPU OFF)
+        AI cpuAI = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf")
+                        .withGpu(false);       // Force CPU execution (0 GPU layers)
 
-        // Fluid streaming with full sampling control (system prompt, temperature, topP, topK, maxTokens)
-        localAI.withSystemPrompt("You are an expert Java performance engineer.")
-               .withTemperature(0.7f)
-               .withTopP(0.9f)
-               .withTopK(40)
-               .withMaxTokens(256)
-               .stream("Write a quicksort in Java:", token -> {
-                   System.out.print(token);
-                   System.out.flush();
-               });
+        // 3. Fluid streaming with full sampling control
+        gpuAI.withSystemPrompt("You are an expert Java performance engineer.")
+             .withTemperature(0.7f)
+             .withTopP(0.9f)
+             .withTopK(40)
+             .withMaxTokens(256)
+             .stream("Write a quicksort in Java:", token -> {
+                 System.out.print(token);
+                 System.out.flush();
+             });
 
-        // Cloud provider instance with identical sampling & streaming interface
+        // 4. Cloud provider instance with identical sampling & streaming interface
         AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
         cloudAI.withTemperature(0.2f)
                .withMaxTokens(500)
