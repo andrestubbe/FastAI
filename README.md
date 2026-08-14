@@ -1,6 +1,6 @@
-# FastAI 0.1.5 — Unified AI client for Java
+# FastAI 0.1.6 — Unified AI client for Java
 
-[![Status](https://img.shields.io/badge/status-0.1.5-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.5)
+[![Status](https://img.shields.io/badge/status-0.1.6-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.6)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
@@ -96,35 +96,35 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
 </dependency>
 
 <!-- FastJSON (Required Dependency) -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>FastJSON</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.6</version>
 </dependency>
 
 <!-- FastCore (Required Native Loader) -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastcore</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.6</version>
 </dependency>
 
 <!-- FastString (Required Dependency) -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>FastString</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.6</version>
 </dependency>
 
 <!-- FastBytes (Required Dependency) -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>FastBytes</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.6</version>
 </dependency>
 </dependencies>
 ```
@@ -137,11 +137,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.andrestubbe:fastai:0.1.5'
-    implementation 'com.github.andrestubbe:FastJSON:0.1.2'
-    implementation 'com.github.andrestubbe:fastcore:0.1.0'
-    implementation 'com.github.andrestubbe:FastString:0.1.0'
-    implementation 'com.github.andrestubbe:FastBytes:0.1.0'
+    implementation 'com.github.andrestubbe:fastai:0.1.6'
+    implementation 'com.github.andrestubbe:FastJSON:0.1.6'
+    implementation 'com.github.andrestubbe:fastcore:0.1.6'
+    implementation 'com.github.andrestubbe:FastString:0.1.6'
+    implementation 'com.github.andrestubbe:FastBytes:0.1.6'
 }
 ```
 
@@ -149,11 +149,11 @@ dependencies {
 
 Download the latest JARs directly to add them to your classpath:
 
-1. 🚀 **[fastai-0.1.5.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.5/fastai-0.1.5.jar)** (Core Library)
-2. 📦 **[FastJSON-0.1.0.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.0/FastJSON-0.1.0.jar)** (Required JSON Parser)
-3. ⚙️ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (Mandatory Native JNI Loader)
-4. 📦 **[FastString-0.1.0.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.0/FastString-0.1.0.jar)** (Required String Dependency)
-5. 📦 **[FastBytes-0.1.0.jar](https://github.com/andrestubbe/FastBytes/releases/download/0.1.0/FastBytes-0.1.0.jar)** (Required Bytes Dependency)
+1. 🚀 **[fastai-0.1.6.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.6/fastai-0.1.6.jar)** (Core Library)
+2. 📦 **[FastJSON-0.1.6.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.6/FastJSON-0.1.6.jar)** (Required JSON Parser)
+3. ⚙️ **[fastcore-0.1.6.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.6/fastcore-0.1.6.jar)** (Mandatory Native JNI Loader)
+4. 📦 **[FastString-0.1.6.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.6/FastString-0.1.6.jar)** (Required String Dependency)
+5. 📦 **[FastBytes-0.1.6.jar](https://github.com/andrestubbe/FastBytes/releases/download/0.1.6/FastBytes-0.1.6.jar)** (Required Bytes Dependency)
 
 > [!IMPORTANT]
 > All JARs must be in your classpath for the native JNI calls to function correctly.
