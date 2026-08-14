@@ -24,14 +24,22 @@ If you need **a drop-in AI module**, **multi-provider interchangeability**, or *
 ## Quick Start
 
 ```java
+// Connect to local GPU-accelerated model or cloud provider
 AI localAI = FastAI.connect("ollama:llama3.1");
+
+// Standard ask
 System.out.println(localAI.ask("Explain quantum physics simply."));
 
-AI openRouterAI = FastAI.connect("openrouter:anthropic/claude-3.5-sonnet", System.getenv("OPENROUTER_API_KEY"));
-System.out.println(openRouterAI.ask("Explain quantum physics simply."));
+// Fluid streaming with sampling parameters (temperature, topP)
+localAI.withTemperature(0.7f)
+       .withTopP(0.9f)
+       .stream("Write a quicksort in Java:", token -> {
+           System.out.print(token);
+           System.out.flush();
+       });
 
 AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
-System.out.println(cloudAI.ask("Explain quantum physics simply."));
+System.out.println(cloudAI.ask("Summarize latest tech trends."));
 ```
 
 ---
