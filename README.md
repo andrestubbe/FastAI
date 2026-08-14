@@ -68,6 +68,7 @@ FastAI solves this by providing:
 ## Key Features
 
 - **🌐 Local + Cloud Support** — Use local models, OpenRouter, or cloud giants with the exact same code.
+- **⚡ In-Process Local GPU Engine** — Direct zero-IPC local LLM inference via **FastAIModel** with Vulkan (Intel/AMD/NVIDIA) and Metal (Apple Silicon) GPU offloading.
 - **🔌 OpenRouter Unified Gateway** — Access 200+ models (Claude 3.5, DeepSeek R1, Llama 3.3, GPT-4o) using `openrouter:model/name`.
 - **📎 Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
 - **🎭 System Prompts** — Native support for System vs User prompts.
