@@ -24,22 +24,33 @@ If you need **a drop-in AI module**, **multi-provider interchangeability**, or *
 ## Quick Start
 
 ```java
-// Connect to local GPU-accelerated model or cloud provider
-AI localAI = FastAI.connect("ollama:llama3.1");
+import fastai.AI;
+import fastai.FastAI;
 
-// Standard ask
-System.out.println(localAI.ask("Explain quantum physics simply."));
+public class QuickStartDemo {
+    public static void main(String[] args) {
+        // Connect to local GPU-accelerated model or cloud provider
+        AI localAI = FastAI.connect("ollama:llama3.1");
 
-// Fluid streaming with sampling parameters (temperature, topP)
-localAI.withTemperature(0.7f)
-       .withTopP(0.9f)
-       .stream("Write a quicksort in Java:", token -> {
-           System.out.print(token);
-           System.out.flush();
-       });
+        // Standard ask
+        System.out.println(localAI.ask("Explain quantum physics simply."));
 
-AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
-System.out.println(cloudAI.ask("Summarize latest tech trends."));
+        // Fluid streaming with full sampling control (system prompt, temperature, topP, topK, maxTokens)
+        localAI.withSystemPrompt("You are an expert Java performance engineer.")
+               .withTemperature(0.7f)
+               .withTopP(0.9f)
+               .withTopK(40)
+               .withMaxTokens(256)
+               .stream("Write a quicksort in Java:", token -> {
+                   System.out.print(token);
+                   System.out.flush();
+               });
+
+        // Cloud provider instance
+        AI cloudAI = FastAI.connect("openai:gpt-4o", System.getenv("OPENAI_API_KEY"));
+        System.out.println(cloudAI.ask("Summarize latest tech trends."));
+    }
+}
 ```
 
 ---
