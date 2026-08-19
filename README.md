@@ -200,6 +200,10 @@ AI ai = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf"); // Native Vulkan
 AI ai = FastAI.connect("ollama:llama3.1");
 AI ai = FastAI.connect("lmstudio:phi3");
 
+// Gateways (OmniRoute 340+ providers with quota-aware routing & token compression)
+AI ai = FastAI.connect("omniroute:claude-3-5-sonnet"); 
+AI ai = FastAI.connect("omniroute:deepseek-r1", "apiKey", "http://localhost:8000/v1");
+
 // OpenRouter Unified Gateway (200+ models)
 AI ai = FastAI.connect("openrouter:anthropic/claude-3.5-sonnet", "sk-or-...");
 AI ai = FastAI.connect("openrouter:deepseek/deepseek-r1", "sk-or-...");
@@ -234,17 +238,18 @@ ai.stream("Write a poem",System.out::print);
 
 ## Providers Supported
 
-| Provider         | Type  | Status     | Features                               |
-|------------------|-------|------------|----------------------------------------|
-| Ollama           | Local | ✔️ Native  | Chat, Streaming, List Models           |
-| llama.cpp        | Local | ✔️ Native  | GGUF Local Inference (GPU missing)     |
-| LM Studio        | Local | ✔️ Native  | Chat, Streaming via Local API          |
-| Gemini           | Cloud | ✔️ Native  | Chat, Streaming, List Models           |
-| OpenRouter       | Cloud | ✔️ Native  | Chat, Streaming, 200+ Models           |
-| OpenAI           | Cloud | ✔️ Native  | Chat, Streaming                        |
-| Anthropic Claude | Cloud | ✔️ Native  | Chat, Streaming                        |
-| Mistral          | Cloud | ✔️ Native  | Chat, Streaming                        |
-| DeepSeek         | Cloud | ✔️ Native  | Chat, Streaming                        |
+| Provider         | Type    | Status     | Features                               |
+|------------------|---------|------------|----------------------------------------|
+| OmniRoute        | Gateway | ✔️ Native  | 340+ Providers, Auto-Fallback, Compress|
+| Ollama           | Local   | ✔️ Native  | Chat, Streaming, List Models           |
+| llama.cpp        | Local   | ✔️ Native  | GGUF Local Inference (GPU missing)     |
+| LM Studio        | Local   | ✔️ Native  | Chat, Streaming via Local API          |
+| Gemini           | Cloud   | ✔️ Native  | Chat, Streaming, List Models           |
+| OpenRouter       | Cloud   | ✔️ Native  | Chat, Streaming, 200+ Models           |
+| OpenAI           | Cloud   | ✔️ Native  | Chat, Streaming                        |
+| Anthropic Claude | Cloud   | ✔️ Native  | Chat, Streaming                        |
+| Mistral          | Cloud   | ✔️ Native  | Chat, Streaming                        |
+| DeepSeek         | Cloud   | ✔️ Native  | Chat, Streaming                        |
 
 ---
 
