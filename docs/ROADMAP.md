@@ -6,6 +6,7 @@
 - [x] Fluent Sampling Control (`withTemperature`, `withTopP`, `withTopK`)
 - [x] OpenRouter 200+ Model Unified Gateway
 - [x] Universal Token Streaming
+- [x] OmniRoute 340+ Provider Gateway with Quota-Aware Auto-Fallback (`omniroute:`)
 
 ## Q4 2026
 

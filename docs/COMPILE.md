@@ -13,4 +13,4 @@
 mvn clean install -DskipTests
 ```
 
-Installs `fastai-0.1.6.jar` to local Maven repository.
+Installs `fastai-0.1.7.jar` to local Maven repository.

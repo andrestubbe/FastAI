@@ -297,11 +297,11 @@ mvn compile exec:java    # Run demo
 
 ## Documentation
 
-* **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
-* **[REFERENCE.md](docs/REFERENCE.md)**: Exhaustive catalog of SGR styles, OSC window parameters, and callback contracts.
-* **[PHILOSOPHY.md](docs/PHILOSOPHY.md)**: Zero-allocation and low-overhead processing designs.
-* **[ROADMAP.md](docs/ROADMAP.md)**: Planned milestone features and performance extensions.
-* **[CHANGELOG.md](docs/CHANGELOG.md)**
+* **[COMPILE.md](docs/COMPILE.md)**: Full compilation and build guide.
+* **[REFERENCE.md](docs/REFERENCE.md)**: API reference for factory methods, sampling controls, and streaming contracts.
+* **[PHILOSOPHY.md](docs/PHILOSOPHY.md)**: Unified fluent design and zero-dependency architecture.
+* **[ROADMAP.md](docs/ROADMAP.md)**: Planned milestone features and gateway extensions.
+* **[CHANGELOG.md](docs/CHANGELOG.md)**: Version history and release notes.
 
 ---
 
