@@ -15,9 +15,24 @@ public final class FastAI {
         String provider = parts[0].toLowerCase();
         String model = parts.length > 1 ? parts[1] : null;
 
+        String customUrl = null;
+        if (model != null && model.contains("?")) {
+            String[] mParts = model.split("\\?", 2);
+            model = mParts[0];
+            for (String param : mParts[1].split("&")) {
+                String[] kv = param.split("=", 2);
+                if (kv.length == 2 && ("url".equalsIgnoreCase(kv[0]) || "baseurl".equalsIgnoreCase(kv[0]))) {
+                    customUrl = java.net.URLDecoder.decode(kv[1], java.nio.charset.StandardCharsets.UTF_8);
+                }
+            }
+        }
+
+        final String finalUrl = customUrl != null ? customUrl : argOrNull(args, 1);
+
         AIProvider impl = switch (provider) {
             case "ollama" -> new OllamaClient(model);
             case "lmstudio" -> new LMStudioClient(model);
+            case "omniroute" -> new OmniRouteClient(model, argOrNull(args, 0), finalUrl);
             case "llamacpp", "llama.cpp", "llama" -> createLlamaCppClient(model, args);
             case "openai" -> new OpenAIClient(model, argOrNull(args, 0));
             case "openrouter" -> new OpenRouterClient(model, argOrNull(args, 0));
