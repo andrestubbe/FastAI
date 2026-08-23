@@ -1,5 +1,14 @@
 # FastAI Version Changelog
 
+## [0.1.12] — 2026-08-23
+
+### Added & Updated
+- **Comprehensive Javadocs**: Added Javadocs across all core interfaces, factory methods, records, and internal parsers.
+- **ModelRegistry Expansion**: Added current 2026 pricing tables for OpenAI (o1, o1-mini, o3-mini), Anthropic Claude (3.5 Sonnet, 3.5 Haiku, Opus), DeepSeek (R1, V3, Reasoner), and Llama 3.1 / 3.3.
+- **Architectural Refactoring**: Internalized `SseStreamDecoder` and `UsageParser` into `fastai.internal`.
+
+---
+
 ## [0.1.11] — 2026-08-23
 
 ### Added & Optimized
