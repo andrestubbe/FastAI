@@ -87,72 +87,72 @@ public class FallbackRouterClient implements AIProvider {
     }
 
     @Override
-    public AIResponse generate(AIRequest request) {
-        long now = System.currentTimeMillis();
-        List<Throwable> errors = new ArrayList<>();
+    public AIResponse generate(final AIRequest request) {
+        final long now = System.currentTimeMillis();
+        final List<String> errorMessages = new ArrayList<>();
         
         // Pass 1: Try healthy providers
-        for (AIProvider provider : providers) {
+        for (final AIProvider provider : this.providers) {
             if (!isHealthy(provider, now)) continue;
             try {
-                AIResponse res = provider.generate(request);
+                final AIResponse res = provider.generate(request);
                 markSuccess(provider);
                 return res;
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 markFailed(provider);
-                errors.add(t);
+                errorMessages.add(provider.getClass().getSimpleName() + ": " + t.getMessage());
             }
         }
 
         // Pass 2: If all healthy failed or are on cooldown, try all remaining
-        for (AIProvider provider : providers) {
+        for (final AIProvider provider : this.providers) {
             try {
-                AIResponse res = provider.generate(request);
+                final AIResponse res = provider.generate(request);
                 markSuccess(provider);
                 return res;
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 markFailed(provider);
-                errors.add(t);
+                errorMessages.add(provider.getClass().getSimpleName() + ": " + t.getMessage());
             }
         }
-        throw new RuntimeException("All fallback providers failed. Errors: " + errors);
+        throw new RuntimeException("All fallback providers failed. Errors: " + errorMessages);
     }
 
     @Override
-    public void stream(AIRequest request, Consumer<String> tokenHandler) {
-        stream(request, tokenHandler, null);
+    public void stream(final AIRequest request, final Consumer<String> tokenHandler) {
+        this.stream(request, tokenHandler, null);
     }
 
     @Override
-    public void stream(AIRequest request, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
-        long now = System.currentTimeMillis();
-        List<Throwable> errors = new ArrayList<>();
+    public void stream(final AIRequest request, final Consumer<String> tokenHandler, final Consumer<Usage> usageHandler) {
+        final long now = System.currentTimeMillis();
+        final List<String> errorMessages = new ArrayList<>();
 
         // Pass 1: Try healthy providers
-        for (AIProvider provider : providers) {
+        for (final AIProvider provider : this.providers) {
             if (!isHealthy(provider, now)) continue;
             try {
                 provider.stream(request, tokenHandler, usageHandler);
                 markSuccess(provider);
                 return;
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 markFailed(provider);
-                errors.add(t);
+                errorMessages.add(provider.getClass().getSimpleName() + ": " + t.getMessage());
             }
         }
 
         // Pass 2: Retry cooldown providers if needed
-        for (AIProvider provider : providers) {
+        for (final AIProvider provider : this.providers) {
             try {
                 provider.stream(request, tokenHandler, usageHandler);
                 markSuccess(provider);
                 return;
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 markFailed(provider);
-                errors.add(t);
+                errorMessages.add(provider.getClass().getSimpleName() + ": " + t.getMessage());
             }
         }
-        throw new RuntimeException("All fallback stream providers failed. Errors: " + errors);
+        throw new RuntimeException("All fallback stream providers failed. Errors: " + errorMessages);
     }
 
     @Override
