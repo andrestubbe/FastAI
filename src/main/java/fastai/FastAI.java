@@ -50,6 +50,7 @@ public final class FastAI {
             case "cloudflare", "cf" -> new CloudflareAIClient(model, argOrNull(args, 0), argOrNull(args, 1));
             case "together", "togetherai" -> new TogetherAIClient(model, argOrNull(args, 0));
             case "fireworks", "fireworksai" -> new FireworksAIClient(model, argOrNull(args, 0));
+            case "auto", "router" -> "free".equalsIgnoreCase(model) ? FallbackRouterClient.createFreeTierRouter() : FallbackRouterClient.createFreeTierRouter();
             default -> throw new IllegalArgumentException("Unknown provider: " + provider);
         };
 
@@ -100,7 +101,7 @@ public final class FastAI {
     }
 
     public static AI auto() {
-        throw new UnsupportedOperationException("FastAI.auto() not implemented yet");
+        return wrap(FallbackRouterClient.createFreeTierRouter());
     }
 
     private static String argOrNull(String[] args, int index) {
