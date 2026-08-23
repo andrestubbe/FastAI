@@ -150,6 +150,10 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 ### Connect
 
 ```java
+// Auto-Fallback Free Router (Cycles through free providers on rate-limit/errors)
+AI ai = FastAI.auto();
+AI ai = FastAI.connect("auto:free");
+
 // Local Providers & In-Process GPU Engine
 AI ai = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf"); // Native Vulkan/Metal In-Process GPU Engine
 AI ai = FastAI.connect("ollama:llama3.1");
