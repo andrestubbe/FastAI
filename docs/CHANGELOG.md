@@ -1,5 +1,20 @@
 # FastAI Version Changelog
 
+## [0.1.9] — 2026-08-23
+
+### Added
+- **New Cloud Inference Providers**: Added native zero-overhead clients for GitHub Models (`github:`), NVIDIA NIM (`nvidia:`), SiliconFlow (`siliconflow:`), Cloudflare AI (`cloudflare:`), Together AI (`together:`), and Fireworks AI (`fireworks:`).
+- **Tier Categorization**: Introduced clear documentation of free/rate-limited tiers (`PERMANENT_FREE`, `TRIAL`, `UNLIMITED LOCAL`, `PAID`).
+
+---
+
+## [0.1.8] — 2026-08-23
+
+### Added
+- **Free-Tier & Gateway Providers**: Integrated Groq (`groq:`), Cerebras (`cerebras:`), SambaNova (`sambanova:`), and LarpRouter (`larprouter:`).
+
+---
+
 ## [0.1.7] — 2026-08-19
 
 ### Added
