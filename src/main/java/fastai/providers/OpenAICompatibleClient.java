@@ -9,15 +9,10 @@ import fastjson.FastJSON;
 import fastjson.FastJsonValue;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,16 +105,13 @@ public class OpenAICompatibleClient implements AIProvider {
         HttpRequest httpRequest = builder.build();
 
         try {
-            try { Files.write(Paths.get("C:\\Users\\andre\\fastbot_debug.log"), ("\n=== NEW REQUEST ===\nURL: " + url + "\nBODY: " + jsonBody + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); } catch(Exception ignored){}
             HttpResponse<Stream<String>> response = httpClient.send(
                     httpRequest,
                     HttpResponse.BodyHandlers.ofLines()
             );
 
             if (response.statusCode() != 200) {
-                String err = "API Stream Error: " + response.statusCode();
-                try { Files.write(Paths.get("C:\\Users\\andre\\fastbot_debug.log"), ("HTTP ERROR: " + response.statusCode() + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); } catch(Exception ignored){}
-                throw new RuntimeException(err);
+                throw new RuntimeException("API Stream Error: " + response.statusCode());
             }
 
             try (Stream<String> lines = response.body()) {
@@ -211,11 +203,6 @@ public class OpenAICompatibleClient implements AIProvider {
                 });
             }
         } catch (IOException | InterruptedException e) {
-            try { 
-                StringWriter sw = new StringWriter();
-                e.printStackTrace(new PrintWriter(sw));
-                Files.write(Paths.get("C:\\Users\\andre\\fastbot_debug.log"), ("EXCEPTION: " + e.getMessage() + "\n" + sw.toString() + "\n").getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND); 
-            } catch(Exception ignored){}
             throw new RuntimeException("Failed to call API stream at " + url, e);
         }
     }
