@@ -11,6 +11,9 @@ import java.util.function.Consumer;
 
 public class FallbackRouterClient implements AIProvider {
 
+    private static final long COOLDOWN_MS = 60_000; // 1 minute cooldown on failure
+    private static final java.util.concurrent.ConcurrentHashMap<AIProvider, Long> FAILED_PROVIDERS = new java.util.concurrent.ConcurrentHashMap<>();
+
     private final List<AIProvider> providers;
 
     public FallbackRouterClient(List<AIProvider> providers) {
@@ -65,13 +68,50 @@ public class FallbackRouterClient implements AIProvider {
         return new FallbackRouterClient(list);
     }
 
+    private boolean isHealthy(AIProvider provider, long now) {
+        Long failedAt = FAILED_PROVIDERS.get(provider);
+        if (failedAt == null) return true;
+        if (now - failedAt > COOLDOWN_MS) {
+            FAILED_PROVIDERS.remove(provider);
+            return true;
+        }
+        return false;
+    }
+
+    private void markFailed(AIProvider provider) {
+        FAILED_PROVIDERS.put(provider, System.currentTimeMillis());
+    }
+
+    private void markSuccess(AIProvider provider) {
+        FAILED_PROVIDERS.remove(provider);
+    }
+
     @Override
     public AIResponse generate(AIRequest request) {
+        long now = System.currentTimeMillis();
         List<Throwable> errors = new ArrayList<>();
+        
+        // Pass 1: Try healthy providers
+        for (AIProvider provider : providers) {
+            if (!isHealthy(provider, now)) continue;
+            try {
+                AIResponse res = provider.generate(request);
+                markSuccess(provider);
+                return res;
+            } catch (Throwable t) {
+                markFailed(provider);
+                errors.add(t);
+            }
+        }
+
+        // Pass 2: If all healthy failed or are on cooldown, try all remaining
         for (AIProvider provider : providers) {
             try {
-                return provider.generate(request);
+                AIResponse res = provider.generate(request);
+                markSuccess(provider);
+                return res;
             } catch (Throwable t) {
+                markFailed(provider);
                 errors.add(t);
             }
         }
@@ -85,12 +125,30 @@ public class FallbackRouterClient implements AIProvider {
 
     @Override
     public void stream(AIRequest request, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
+        long now = System.currentTimeMillis();
         List<Throwable> errors = new ArrayList<>();
+
+        // Pass 1: Try healthy providers
+        for (AIProvider provider : providers) {
+            if (!isHealthy(provider, now)) continue;
+            try {
+                provider.stream(request, tokenHandler, usageHandler);
+                markSuccess(provider);
+                return;
+            } catch (Throwable t) {
+                markFailed(provider);
+                errors.add(t);
+            }
+        }
+
+        // Pass 2: Retry cooldown providers if needed
         for (AIProvider provider : providers) {
             try {
                 provider.stream(request, tokenHandler, usageHandler);
+                markSuccess(provider);
                 return;
             } catch (Throwable t) {
+                markFailed(provider);
                 errors.add(t);
             }
         }

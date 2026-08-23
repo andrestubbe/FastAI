@@ -278,42 +278,31 @@ public class OpenAICompatibleClient implements AIProvider {
     }
 
     private String buildJsonRequest(AIRequest request) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"model\": \"").append(escapeJson(model)).append("\",");
-        sb.append("\"messages\": [");
+        fastjson.FastJsonBuilder builder = fastjson.FastJSON.object()
+                .add("model", model);
 
-        boolean hasSystem = request.systemPrompt != null && !request.systemPrompt.isEmpty();
-        if (hasSystem) {
-            sb.append("{\"role\": \"system\", \"content\": \"")
-                    .append(escapeJson(request.systemPrompt))
-                    .append("\"},");
+        fastjson.FastJsonBuilder messages = fastjson.FastJSON.array();
+
+        if (request.systemPrompt != null && !request.systemPrompt.isEmpty()) {
+            messages.addObject(fastjson.FastJSON.object()
+                    .add("role", "system")
+                    .add("content", request.systemPrompt));
         }
 
-        sb.append("{\"role\": \"user\", \"content\": \"")
-                .append(escapeJson(request.userPrompt))
-                .append("\"}");
+        messages.addObject(fastjson.FastJSON.object()
+                .add("role", "user")
+                .add("content", request.userPrompt != null ? request.userPrompt : ""));
 
-        sb.append("],");
+        builder.addArray("messages", messages);
 
         if (request.temperature() != null) {
-            sb.append("\"temperature\": ").append(request.temperature()).append(",");
+            builder.add("temperature", request.temperature().doubleValue());
         }
         if (request.maxTokens() != null) {
-            sb.append("\"max_tokens\": ").append(request.maxTokens()).append(",");
+            builder.add("max_tokens", request.maxTokens());
         }
 
-        sb.append("\"stream\": false");
-        sb.append("}");
-        return sb.toString();
-    }
-
-    private String escapeJson(String input) {
-        if (input == null) return "";
-        return input.replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\n", "\\n")
-                .replace("\r", "\\r")
-                .replace("\t", "\\t");
+        builder.add("stream", false);
+        return builder.buildString();
     }
 }
