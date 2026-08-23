@@ -22,6 +22,11 @@ import java.util.stream.Stream;
 
 public class OpenAICompatibleClient implements AIProvider {
 
+    private static final HttpClient SHARED_HTTP_CLIENT = HttpClient.newBuilder()
+            .version(HttpClient.Version.HTTP_2)
+            .connectTimeout(Duration.ofSeconds(10))
+            .build();
+
     protected final String baseUrl;
     protected final String model;
     protected final String apiKey;
@@ -31,10 +36,7 @@ public class OpenAICompatibleClient implements AIProvider {
         this.baseUrl = baseUrl;
         this.model = model;
         this.apiKey = apiKey;
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .connectTimeout(Duration.ofSeconds(10))
-                .build();
+        this.httpClient = SHARED_HTTP_CLIENT;
     }
 
     @Override
