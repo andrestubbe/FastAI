@@ -200,6 +200,28 @@ String answer = ai.ask("What is in this image?", new File("diagram.png"));
 ai.stream("Write a poem", System.out::print);
 ```
 
+### Real-World Production Patterns
+
+#### 1. Auto-Healing Resilient Cloud Agent
+```java
+// Automatically switches to next free provider if rate-limited
+AI ai = FastAI.auto();
+String result = ai.ask("Analyze this stack trace and suggest a patch:\n" + stackTrace);
+```
+
+#### 2. Local-First Air-Gapped Code Completion (0 IPC, GPU Accelerated)
+```java
+try (AI localEngine = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf")) {
+    localEngine.stream("public static <T> List<T> reverse(List<T> list) {", System.out::print);
+}
+```
+
+#### 3. Real-Time Multimodal Vision Inspector
+```java
+AI visionAI = FastAI.connect("gemini:gemini-2.0-flash", apiKey);
+String caption = visionAI.ask("Describe the UI anomalies in this rendering:", new File("render_output.png"));
+```
+
 ---
 
 ## Providers Supported
