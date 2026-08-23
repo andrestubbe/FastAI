@@ -44,6 +44,12 @@ public final class FastAI {
             case "cerebras" -> new CerebrasClient(model, argOrNull(args, 0));
             case "sambanova" -> new SambaNovaClient(model, argOrNull(args, 0));
             case "larprouter", "larp" -> new LarpRouterClient(model, argOrNull(args, 0));
+            case "github", "githubmodels" -> new GitHubModelsClient(model, argOrNull(args, 0));
+            case "nvidia", "nvidianim", "nim" -> new NvidiaNimClient(model, argOrNull(args, 0));
+            case "siliconflow", "silicon" -> new SiliconFlowClient(model, argOrNull(args, 0));
+            case "cloudflare", "cf" -> new CloudflareAIClient(model, argOrNull(args, 0), argOrNull(args, 1));
+            case "together", "togetherai" -> new TogetherAIClient(model, argOrNull(args, 0));
+            case "fireworks", "fireworksai" -> new FireworksAIClient(model, argOrNull(args, 0));
             default -> throw new IllegalArgumentException("Unknown provider: " + provider);
         };
 

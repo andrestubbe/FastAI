@@ -204,12 +204,18 @@ ai.stream("Write a poem", System.out::print);
 |------------------|---------|----------------|------------|----------------------------------------|
 | OmniRoute        | Gateway | TRIAL / PRO    | ✔️ Native  | 340+ Providers, Auto-Fallback, Compress|
 | LarpRouter       | Gateway | TRIAL ($0.10)  | ✔️ Native  | Multi-Model Routing, OpenAI compatible |
+| OpenRouter       | Gateway | FREE / PAID    | ✔️ Native  | Chat, Streaming, 200+ Models (:free)   |
 | Gemini           | Cloud   | PERMANENT_FREE | ✔️ Native  | Chat, Streaming, List Models           |
 | Groq             | Cloud   | PERMANENT_FREE | ✔️ Native  | Ultra-Fast Inference, Rate-limited Free|
 | Cerebras         | Cloud   | PERMANENT_FREE | ✔️ Native  | Ultra-Fast Inference, Free Tier        |
 | SambaNova        | Cloud   | PERMANENT_FREE | ✔️ Native  | Fast Llama/Qwen Inference, Free Tier   |
+| GitHub Models    | Cloud   | PERMANENT_FREE | ✔️ Native  | GPT-4o-mini, Llama, Free Rate-Limits   |
+| Cloudflare AI    | Cloud   | PERMANENT_FREE | ✔️ Native  | Workers AI Llama, Daily Free Tokens    |
+| NVIDIA NIM       | Cloud   | TRIAL (1k req) | ✔️ Native  | Enterprise Model APIs, Free Credits    |
+| SiliconFlow      | Cloud   | TRIAL / FREE   | ✔️ Native  | DeepSeek V3/R1, Qwen Fast Endpoints    |
+| Together AI      | Cloud   | TRIAL / PAID   | ✔️ Native  | Broad Open-Source Models, Fast Speed   |
+| Fireworks AI     | Cloud   | TRIAL / PAID   | ✔️ Native  | Optimized Inference, Function Calling  |
 | Mistral          | Cloud   | PERMANENT_FREE | ✔️ Native  | Chat, Streaming, Free Experiment Tier  |
-| OpenRouter       | Gateway | FREE / PAID    | ✔️ Native  | Chat, Streaming, Free Models (:free)   |
 | DeepSeek         | Cloud   | TRIAL / PAID   | ✔️ Native  | Chat, Streaming, Low Cost              |
 | Ollama           | Local   | UNLIMITED LOCAL| ✔️ Native  | Chat, Streaming, List Models           |
 | llama.cpp        | Local   | UNLIMITED LOCAL| ✔️ Native  | GGUF Local Inference (CPU/GPU)         |
