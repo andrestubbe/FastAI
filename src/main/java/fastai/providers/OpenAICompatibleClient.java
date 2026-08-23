@@ -32,7 +32,7 @@ public class OpenAICompatibleClient implements AIProvider {
     protected final String apiKey;
     protected final HttpClient httpClient;
 
-    public OpenAICompatibleClient(String baseUrl, String model, String apiKey) {
+    public OpenAICompatibleClient(final String baseUrl, final String model, final String apiKey) {
         this.baseUrl = baseUrl;
         this.model = model;
         this.apiKey = apiKey;
@@ -40,24 +40,24 @@ public class OpenAICompatibleClient implements AIProvider {
     }
 
     @Override
-    public AIResponse generate(AIRequest request) {
-        String url = baseUrl + "/chat/completions";
-        String jsonBody = buildJsonRequest(request);
+    public AIResponse generate(final AIRequest request) {
+        final String url = this.baseUrl + "/chat/completions";
+        final String jsonBody = buildJsonRequest(request);
 
-        HttpRequest.Builder builder = HttpRequest.newBuilder()
+        final HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .timeout(Duration.ofSeconds(300))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
-        if (apiKey != null && !apiKey.isEmpty()) {
-            builder.header("Authorization", "Bearer " + apiKey);
+        if (this.apiKey != null && !this.apiKey.isEmpty()) {
+            builder.header("Authorization", "Bearer " + this.apiKey);
         }
 
-        HttpRequest httpRequest = builder.build();
+        final HttpRequest httpRequest = builder.build();
 
         try {
-            HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            final HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
                 throw new RuntimeException("API Error: " + response.statusCode() + " - " + response.body());
             }
@@ -87,30 +87,30 @@ public class OpenAICompatibleClient implements AIProvider {
     }
 
     @Override
-    public void stream(AIRequest request, Consumer<String> tokenHandler) {
-        stream(request, tokenHandler, null);
+    public void stream(final AIRequest request, final Consumer<String> tokenHandler) {
+        this.stream(request, tokenHandler, null);
     }
 
     @Override
-    public void stream(AIRequest request, Consumer<String> tokenHandler, Consumer<Usage> usageHandler) {
-        String url = baseUrl + "/chat/completions";
+    public void stream(final AIRequest request, final Consumer<String> tokenHandler, final Consumer<Usage> usageHandler) {
+        final String url = this.baseUrl + "/chat/completions";
         // Build request with stream: true and stream_options to request usage token information
-        String jsonBody = buildJsonRequest(request).replace("\"stream\": false", "\"stream\": true");
+        final String jsonBody = this.buildJsonRequest(request).replace("\"stream\": false", "\"stream\": true");
 
-        HttpRequest.Builder builder = HttpRequest.newBuilder()
+        final HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .timeout(Duration.ofSeconds(300))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
 
-        if (apiKey != null && !apiKey.isEmpty()) {
-            builder.header("Authorization", "Bearer " + apiKey);
+        if (this.apiKey != null && !this.apiKey.isEmpty()) {
+            builder.header("Authorization", "Bearer " + this.apiKey);
         }
 
-        HttpRequest httpRequest = builder.build();
+        final HttpRequest httpRequest = builder.build();
 
         try {
-            HttpResponse<Stream<String>> response = httpClient.send(
+            final HttpResponse<Stream<String>> response = this.httpClient.send(
                     httpRequest,
                     HttpResponse.BodyHandlers.ofLines()
             );
@@ -193,36 +193,36 @@ public class OpenAICompatibleClient implements AIProvider {
 
     @Override
     public List<String> getModels() {
-        String url = baseUrl + "/models";
-        HttpRequest.Builder builder = HttpRequest.newBuilder()
+        final String url = this.baseUrl + "/models";
+        final HttpRequest.Builder builder = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET();
 
-        if (apiKey != null && !apiKey.isEmpty()) {
-            builder.header("Authorization", "Bearer " + apiKey);
+        if (this.apiKey != null && !this.apiKey.isEmpty()) {
+            builder.header("Authorization", "Bearer " + this.apiKey);
         }
 
-        HttpRequest httpRequest = builder.build();
+        final HttpRequest httpRequest = builder.build();
 
         try {
-            HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            final HttpResponse<String> response = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
                 return Collections.emptyList();
             }
 
-            List<String> modelsList = new ArrayList<>();
-            try (FastJsonValue doc = FastJSON.parse(response.body())) {
-                FastJsonValue dataArray = doc.path("data");
+            final List<String> modelsList = new ArrayList<>();
+            try (final FastJsonValue doc = FastJSON.parse(response.body())) {
+                final FastJsonValue dataArray = doc.path("data");
                 if (dataArray != null && dataArray.isArray()) {
                     for (int i = 0; i < dataArray.size(); i++) {
-                        FastJsonValue modelObj = dataArray.get(i);
+                        final FastJsonValue modelObj = dataArray.get(i);
                         if (modelObj != null) {
-                            FastJsonValue idVal = modelObj.path("id");
+                            final FastJsonValue idVal = modelObj.path("id");
                             if (idVal != null && !idVal.isNull()) {
-                                String modelId = idVal.asString();
+                                final String modelId = idVal.asString();
                                 if (modelId != null) {
                                     String normId = modelId;
-                                    int colonIdx = normId.indexOf(" :");
+                                    final int colonIdx = normId.indexOf(" :");
                                     if (colonIdx != -1) {
                                         normId = normId.substring(0, colonIdx).trim();
                                     } else {
@@ -238,17 +238,17 @@ public class OpenAICompatibleClient implements AIProvider {
                 }
             }
             return modelsList;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return Collections.emptyList();
         }
     }
 
-    private static String unescapeJsonChunk(String src, int start, int end) {
-        StringBuilder sb = new StringBuilder(end - start);
+    private static String unescapeJsonChunk(final String src, final int start, final int end) {
+        final StringBuilder sb = new StringBuilder(end - start);
         for (int i = start; i < end; i++) {
-            char c = src.charAt(i);
+            final char c = src.charAt(i);
             if (c == '\\' && i + 1 < end) {
-                char next = src.charAt(i + 1);
+                final char next = src.charAt(i + 1);
                 switch (next) {
                     case 'n' -> { sb.append('\n'); i++; }
                     case 'r' -> { sb.append('\r'); i++; }
@@ -258,10 +258,10 @@ public class OpenAICompatibleClient implements AIProvider {
                     case 'u' -> {
                         if (i + 5 < end) {
                             try {
-                                int code = Integer.parseInt(src.substring(i + 2, i + 6), 16);
+                                final int code = Integer.parseInt(src.substring(i + 2, i + 6), 16);
                                 sb.append((char) code);
                                 i += 5;
-                            } catch (NumberFormatException e) {
+                            } catch (final NumberFormatException e) {
                                 sb.append(c);
                             }
                         } else {
@@ -277,11 +277,11 @@ public class OpenAICompatibleClient implements AIProvider {
         return sb.toString();
     }
 
-    private String buildJsonRequest(AIRequest request) {
-        fastjson.FastJsonBuilder builder = fastjson.FastJSON.object()
-                .add("model", model);
+    private String buildJsonRequest(final AIRequest request) {
+        final fastjson.FastJsonBuilder builder = fastjson.FastJSON.object()
+                .add("model", this.model);
 
-        fastjson.FastJsonBuilder messages = fastjson.FastJSON.array();
+        final fastjson.FastJsonBuilder messages = fastjson.FastJSON.array();
 
         if (request.systemPrompt != null && !request.systemPrompt.isEmpty()) {
             messages.addObject(fastjson.FastJSON.object()

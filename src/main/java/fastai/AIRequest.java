@@ -30,19 +30,19 @@ public final class AIRequest {
     }
 
     public Double temperature() {
-        return temperature;
+        return this.temperature;
     }
 
     public Integer maxTokens() {
-        return maxTokens;
+        return this.maxTokens;
     }
 
-    public AIRequest temperature(double temperature) {
+    public AIRequest temperature(final double temperature) {
         this.temperature = temperature;
         return this;
     }
 
-    public AIRequest maxTokens(int maxTokens) {
+    public AIRequest maxTokens(final int maxTokens) {
         this.maxTokens = maxTokens;
         return this;
     }
