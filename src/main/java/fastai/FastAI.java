@@ -40,6 +40,10 @@ public final class FastAI {
             case "mistral" -> new MistralClient(model, argOrNull(args, 0));
             case "deepseek" -> new DeepSeekClient(model, argOrNull(args, 0));
             case "gemini" -> new GeminiClient(model, argOrNull(args, 0));
+            case "groq" -> new GroqClient(model, argOrNull(args, 0));
+            case "cerebras" -> new CerebrasClient(model, argOrNull(args, 0));
+            case "sambanova" -> new SambaNovaClient(model, argOrNull(args, 0));
+            case "larprouter", "larp" -> new LarpRouterClient(model, argOrNull(args, 0));
             default -> throw new IllegalArgumentException("Unknown provider: " + provider);
         };
 

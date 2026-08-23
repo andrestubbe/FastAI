@@ -1,6 +1,6 @@
-# FastAI 0.1.7 — Unified AI client for Java
+# FastAI 0.1.8 — Unified AI client for Java
 
-[![Status](https://img.shields.io/badge/status-0.1.7-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.7)
+[![Status](https://img.shields.io/badge/status-0.1.8-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.8)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
@@ -10,7 +10,7 @@
 
 **💡 One interface for all Local, Gateway and Cloud AI models — No JSON, No HTTP, No Boilerplate.**
 
-FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (OmniRoute, Ollama, LM Studio, OpenAI, OpenRouter.ai, Claude, Mistral, DeepSeek) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP clients, and bloated frameworks.
+FastAI is a **minimalist, hyper-fast Java AI library** that unifies all major LLM providers (OmniRoute, Groq, Cerebras, SambaNova, LarpRouter, Ollama, LM Studio, OpenAI, OpenRouter.ai, Claude, Mistral, DeepSeek, Gemini) behind a single, elegant interface. Built for **Java developers** who hate JSON parsing, HTTP clients, and bloated frameworks.
 
 If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is your solution.
 
@@ -86,7 +86,7 @@ Direct SDKs lock you into one provider.
 FastAI solves this by providing:
 
 - **Zero JSON handling** — everything is native Java Strings and Files.
-- **Provider Interchangeability** — switch between `ollama`, `openrouter`, and `openai` by changing one string.
+- **Provider Interchangeability** — switch between `ollama`, `openrouter`, `groq`, `cerebras`, `sambanova` and `openai` by changing one string.
 - **Zero Dependencies** — pure Java 17+, no Jackson, no Spring.
 - **True Unified Interface** — `AI` is all you need to know.
 
@@ -94,7 +94,7 @@ FastAI solves this by providing:
 
 ## Key Features
 
-- **🌐 Local + Cloud Support** — Use local models, OpenRouter, or cloud giants with the exact same code.
+- **🌐 Local + Cloud Support** — Use local models, OpenRouter, Groq, Cerebras, SambaNova, or cloud giants with the exact same code.
 - **⚡ In-Process Local GPU Engine** — Direct zero-IPC local LLM inference via **FastAIModel** with Vulkan (Intel/AMD/NVIDIA) and Metal (Apple Silicon) GPU offloading.
 - **🔌 OpenRouter Unified Gateway** — Access 200+ models (Claude 3.5, DeepSeek R1, Llama 3.3, GPT-4o) using `openrouter:model/name`.
 - **📎 Simple Attachments** — Pass a `java.io.File` and let FastAI handle the Base64/Multipart encoding.
@@ -124,69 +124,24 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
-    <version>0.1.7</version>
+    <version>0.1.8</version>
 </dependency>
 
 <!-- FastJSON (Required Dependency) -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>FastJSON</artifactId>
-    <version>0.1.6</version>
-</dependency>
-
-<!-- FastCore (Required Native Loader) -->
-<dependency>
-    <groupId>com.github.andrestubbe</groupId>
-    <artifactId>fastcore</artifactId>
-    <version>0.1.6</version>
-</dependency>
-
-<!-- FastString (Required Dependency) -->
-<dependency>
-    <groupId>com.github.andrestubbe</groupId>
-    <artifactId>FastString</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.3</version>
 </dependency>
 
 <!-- FastAIModel (Local In-Process GPU Engine) -->
 <dependency>
     <groupId>com.github.andrestubbe.FastAIModel</groupId>
     <artifactId>fastaimodel-llama</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 </dependencies>
 ```
-
-### Option 2: Gradle (via JitPack)
-
-```groovy
-repositories {
-    maven { url 'https://jitpack.io' }
-}
-
-dependencies {
-    implementation 'com.github.andrestubbe:fastai:0.1.6'
-    implementation 'com.github.andrestubbe:FastJSON:0.1.6'
-    implementation 'com.github.andrestubbe:fastcore:0.1.6'
-    implementation 'com.github.andrestubbe:FastString:0.1.6'
-    implementation 'com.github.andrestubbe:FastBytes:0.1.6'
-    implementation 'com.github.andrestubbe.FastAIModel:fastaimodel-llama:0.1.3'
-}
-```
-
-### Option 3: Direct Download (No Build Tool)
-
-Download the latest JARs directly to add them to your classpath:
-
-1. 🚀 **[fastai-0.1.6.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.6/fastai-0.1.6.jar)** (Core Library)
-2. 🤖 **[fastaimodel-llama-0.1.3.jar](https://github.com/andrestubbe/FastAIModel/releases/download/v0.1.3/fastaimodel-llama-0.1.3.jar)** (Local In-Process GPU Engine)
-3. 📦 **[FastJSON-0.1.6.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.6/FastJSON-0.1.6.jar)** (Required JSON Parser)
-4. ⚙️ **[fastcore-0.1.6.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.6/fastcore-0.1.6.jar)** (Mandatory Native JNI Loader)
-5. 📦 **[FastString-0.1.6.jar](https://github.com/andrestubbe/FastString/releases/download/0.1.6/FastString-0.1.6.jar)** (Required String Dependency)
-6. 📦 **[FastBytes-0.1.6.jar](https://github.com/andrestubbe/FastBytes/releases/download/0.1.6/FastBytes-0.1.6.jar)** (Required Bytes Dependency)
-
-> [!IMPORTANT]
-> All JARs must be in your classpath for the native JNI calls to function correctly.
 
 ---
 
@@ -200,9 +155,15 @@ AI ai = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf"); // Native Vulkan
 AI ai = FastAI.connect("ollama:llama3.1");
 AI ai = FastAI.connect("lmstudio:phi3");
 
-// Gateways (OmniRoute 340+ providers with quota-aware routing & token compression)
+// Gateways
 AI ai = FastAI.connect("omniroute:claude-3-5-sonnet"); 
 AI ai = FastAI.connect("omniroute:deepseek-r1", "apiKey", "http://localhost:8000/v1");
+AI ai = FastAI.connect("larprouter:gpt-5.6-sol", "sk-larp-...");
+
+// Free-Tier / High-Speed Cloud Providers
+AI ai = FastAI.connect("groq:llama-3.3-70b-versatile", "gsk_...");
+AI ai = FastAI.connect("cerebras:llama3.1-70b", "csk-...");
+AI ai = FastAI.connect("sambanova:Meta-Llama-3.1-70B-Instruct", "key...");
 
 // OpenRouter Unified Gateway (200+ models)
 AI ai = FastAI.connect("openrouter:anthropic/claude-3.5-sonnet", "sk-or-...");
@@ -213,6 +174,7 @@ AI ai = FastAI.connect("openai:gpt-4o", "sk-...");
 AI ai = FastAI.connect("claude:opus", "sk-ant-...");
 AI ai = FastAI.connect("mistral:large", "key...");
 AI ai = FastAI.connect("deepseek:chat", "key...");
+AI ai = FastAI.connect("gemini:gemini-1.5-flash", "AIzaSy...");
 ```
 
 ### Generation & Prompting
@@ -231,7 +193,7 @@ String answer = ai.ask("What is in this image?", new File("diagram.png"));
 ### Streaming
 
 ```java
-ai.stream("Write a poem",System.out::print);
+ai.stream("Write a poem", System.out::print);
 ```
 
 ---
@@ -241,8 +203,12 @@ ai.stream("Write a poem",System.out::print);
 | Provider         | Type    | Status     | Features                               |
 |------------------|---------|------------|----------------------------------------|
 | OmniRoute        | Gateway | ✔️ Native  | 340+ Providers, Auto-Fallback, Compress|
+| LarpRouter       | Gateway | ✔️ Native  | Multi-Model Routing, OpenAI compatible |
+| Groq             | Cloud   | ✔️ Native  | Ultra-Fast Inference, Free Tier        |
+| Cerebras         | Cloud   | ✔️ Native  | Ultra-Fast Inference, Free Tier        |
+| SambaNova        | Cloud   | ✔️ Native  | Fast Llama/Qwen Inference, Free Tier   |
 | Ollama           | Local   | ✔️ Native  | Chat, Streaming, List Models           |
-| llama.cpp        | Local   | ✔️ Native  | GGUF Local Inference (GPU missing)     |
+| llama.cpp        | Local   | ✔️ Native  | GGUF Local Inference                   |
 | LM Studio        | Local   | ✔️ Native  | Chat, Streaming via Local API          |
 | Gemini           | Cloud   | ✔️ Native  | Chat, Streaming, List Models           |
 | OpenRouter       | Cloud   | ✔️ Native  | Chat, Streaming, 200+ Models           |
