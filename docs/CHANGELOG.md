@@ -1,5 +1,13 @@
 # FastAI Version Changelog
 
+## [0.1.13] — 2026-08-23
+
+### Added
+- **Native Anthropic Claude Client**: Full implementation of Anthropic Messages API (`/v1/messages`) supporting `claude-3-5-sonnet`, `claude-3-5-haiku`, and `claude-3-opus` with live streaming and shared connection pooling.
+- **JMH Microbenchmark Suite**: Added benchmark project (`examples/Benchmark`) measuring raw byte-level SSE parsing throughput and JSON deserialization speed.
+
+---
+
 ## [0.1.12] — 2026-08-23
 
 ### Added & Updated
