@@ -204,28 +204,28 @@ ai.stream("Write a poem", System.out::print);
 
 ## Providers Supported
 
-| Provider         | Type    | Tier           | Status     | Features                               |
-|------------------|---------|----------------|------------|----------------------------------------|
-| Ollama           | Local   | UNLIMITED LOCAL| ✔️ Native  | Chat, Streaming, List Models           |
-| llama.cpp        | Local   | UNLIMITED LOCAL| ✔️ Native  | GGUF Local Inference (CPU/GPU)         |
-| LM Studio        | Local   | UNLIMITED LOCAL| ✔️ Native  | Chat, Streaming via Local API          |
-| Groq             | Cloud   | PERMANENT_FREE | ✔️ Native  | Ultra-Fast Inference, Rate-limited Free|
-| Cerebras         | Cloud   | PERMANENT_FREE | ✔️ Native  | Ultra-Fast Inference, Free Tier        |
-| SambaNova        | Cloud   | PERMANENT_FREE | ✔️ Native  | Fast Llama/Qwen Inference, Free Tier   |
-| Gemini           | Cloud   | PERMANENT_FREE | ✔️ Native  | Chat, Streaming, List Models           |
-| GitHub Models    | Cloud   | PERMANENT_FREE | ✔️ Native  | GPT-4o-mini, Llama, Free Rate-Limits   |
-| Cloudflare AI    | Cloud   | PERMANENT_FREE | ✔️ Native  | Workers AI Llama, Daily Free Tokens    |
-| Mistral          | Cloud   | PERMANENT_FREE | ✔️ Native  | Chat, Streaming, Free Experiment Tier  |
-| OpenRouter       | Gateway | FREE / PAID    | ✔️ Native  | Chat, Streaming, 200+ Models (:free)   |
-| OmniRoute        | Gateway | TRIAL / PRO    | ✔️ Native  | 340+ Providers, Auto-Fallback, Compress|
-| LarpRouter       | Gateway | TRIAL ($0.10)  | ✔️ Native  | Multi-Model Routing, OpenAI compatible |
-| SiliconFlow      | Cloud   | TRIAL / FREE   | ✔️ Native  | DeepSeek V3/R1, Qwen Fast Endpoints    |
-| NVIDIA NIM       | Cloud   | TRIAL (1k req) | ✔️ Native  | Enterprise Model APIs, Free Credits    |
-| Together AI      | Cloud   | TRIAL / PAID   | ✔️ Native  | Broad Open-Source Models, Fast Speed   |
-| Fireworks AI     | Cloud   | TRIAL / PAID   | ✔️ Native  | Optimized Inference, Function Calling  |
-| DeepSeek         | Cloud   | TRIAL / PAID   | ✔️ Native  | Chat, Streaming, Low Cost              |
-| OpenAI           | Cloud   | PAID           | ✔️ Native  | Chat, Streaming                        |
-| Anthropic Claude | Cloud   | PAID           | ✔️ Native  | Chat, Streaming                        |
+| Provider         | Type    | Tier           | Features                               |
+|------------------|---------|----------------|----------------------------------------|
+| Ollama           | Local   | UNLIMITED LOCAL| Chat, Streaming, List Models           |
+| llama.cpp        | Local   | UNLIMITED LOCAL| GGUF Local Inference (CPU/GPU)         |
+| LM Studio        | Local   | UNLIMITED LOCAL| Chat, Streaming via Local API          |
+| Groq             | Cloud   | PERMANENT_FREE | Ultra-Fast Inference, Rate-limited Free|
+| Cerebras         | Cloud   | PERMANENT_FREE | Ultra-Fast Inference, Free Tier        |
+| SambaNova        | Cloud   | PERMANENT_FREE | Fast Llama/Qwen Inference, Free Tier   |
+| Gemini           | Cloud   | PERMANENT_FREE | Chat, Streaming, List Models           |
+| GitHub Models    | Cloud   | PERMANENT_FREE | GPT-4o-mini, Llama, Free Rate-Limits   |
+| Cloudflare AI    | Cloud   | PERMANENT_FREE | Workers AI Llama, Daily Free Tokens    |
+| Mistral          | Cloud   | PERMANENT_FREE | Chat, Streaming, Free Experiment Tier  |
+| OpenRouter       | Gateway | FREE / PAID    | Chat, Streaming, 200+ Models (:free)   |
+| OmniRoute        | Gateway | TRIAL / PRO    | 340+ Providers, Auto-Fallback, Compress|
+| LarpRouter       | Gateway | TRIAL ($0.10)  | Multi-Model Routing, OpenAI compatible |
+| SiliconFlow      | Cloud   | TRIAL / FREE   | DeepSeek V3/R1, Qwen Fast Endpoints    |
+| NVIDIA NIM       | Cloud   | TRIAL (1k req) | Enterprise Model APIs, Free Credits    |
+| Together AI      | Cloud   | TRIAL / PAID   | Broad Open-Source Models, Fast Speed   |
+| Fireworks AI     | Cloud   | TRIAL / PAID   | Optimized Inference, Function Calling  |
+| DeepSeek         | Cloud   | TRIAL / PAID   | Chat, Streaming, Low Cost              |
+| OpenAI           | Cloud   | PAID           | Chat, Streaming                        |
+| Anthropic Claude | Cloud   | PAID           | Chat, Streaming                        |
 
 > **Tier Legend:**
 > - `UNLIMITED LOCAL`: Runs 100% locally on your machine without external costs or rate limits.
