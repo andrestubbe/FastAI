@@ -249,18 +249,11 @@ FastAI is **zero-dependency** and **zero-allocation** for the core connection la
 
 ---
 
-## Examples
+## Technical Examples & Demos
 
-Every feature has a standalone example in `examples/`:
-
-```bash
-cd examples/Demo
-mvn compile exec:java    # Run demo
-```
-
-| Example          | Demonstrates                  |
-|------------------|-------------------------------|
-| `Demo`           | Local AI, Cloud AI, Streaming |
+| Case | Java Example | Launcher | Description |
+|---|---|---|---|
+| **Unified AI Demo** | [Demo.java](examples/Demo/src/Demo.java) | `run-demo.bat` | Universal CLI demo supporting all 20+ local and cloud providers with real-time streaming. |
 
 ---
 
