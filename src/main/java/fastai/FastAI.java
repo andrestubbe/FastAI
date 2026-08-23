@@ -5,11 +5,31 @@ import fastai.providers.*;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Primary entry-point and factory for connecting to AI model providers and gateways.
+ */
 public final class FastAI {
 
     private FastAI() {
     }
 
+    /**
+     * Connects to a local model, gateway, or cloud AI provider using a unified connection string spec.
+     *
+     * <p>Examples:
+     * <ul>
+     *   <li>{@code FastAI.connect("llama:models/qwen2.5.gguf")}</li>
+     *   <li>{@code FastAI.connect("ollama:llama3.1")}</li>
+     *   <li>{@code FastAI.connect("groq:llama-3.3-70b-versatile", apiKey)}</li>
+     *   <li>{@code FastAI.connect("openai:gpt-4o", apiKey)}</li>
+     *   <li>{@code FastAI.connect("omniroute:claude-3-5-sonnet")}</li>
+     *   <li>{@code FastAI.connect("auto:free")}</li>
+     * </ul>
+     *
+     * @param spec the provider specification string in format {@code "provider:model"} or {@code "auto:free"}
+     * @param args optional arguments (e.g. API key, custom base URL, context size)
+     * @return a connected {@link AI} instance
+     */
     public static AI connect(final String spec, final String... args) {
         String[] parts = spec.split(":", 2);
         String provider = parts[0].toLowerCase();

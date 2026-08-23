@@ -2,10 +2,18 @@ package fastai;
 
 import java.io.File;
 
+/**
+ * Immutable request container for AI model prompting and generation hyper-parameters.
+ */
 public final class AIRequest {
 
+    /** System prompt or persona instruction. */
     public final String systemPrompt;
+
+    /** User input prompt. */
     public final String userPrompt;
+
+    /** Optional file attachment for multimodal inference. */
     public final File attachment;
 
     private Double temperature;

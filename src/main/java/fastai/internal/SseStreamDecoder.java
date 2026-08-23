@@ -23,7 +23,7 @@ public final class SseStreamDecoder {
     /**
      * Reads and decodes an SSE input stream at byte level, dispatching extracted text tokens and usage stats.
      *
-     * @param is the incoming HTTP entity input stream
+     * @param is           the incoming HTTP entity input stream
      * @param tokenHandler the consumer receiving streamed string tokens
      * @param usageHandler the optional consumer receiving token usage telemetry
      * @throws IOException on network reading error
@@ -141,11 +141,26 @@ public final class SseStreamDecoder {
             if (b == '\\' && i + 1 < end) {
                 final byte next = src[i + 1];
                 switch (next) {
-                    case 'n' -> { sb.append('\n'); i++; }
-                    case 'r' -> { sb.append('\r'); i++; }
-                    case 't' -> { sb.append('\t'); i++; }
-                    case '"' -> { sb.append('"'); i++; }
-                    case '\\' -> { sb.append('\\'); i++; }
+                    case 'n' -> {
+                        sb.append('\n');
+                        i++;
+                    }
+                    case 'r' -> {
+                        sb.append('\r');
+                        i++;
+                    }
+                    case 't' -> {
+                        sb.append('\t');
+                        i++;
+                    }
+                    case '"' -> {
+                        sb.append('"');
+                        i++;
+                    }
+                    case '\\' -> {
+                        sb.append('\\');
+                        i++;
+                    }
                     case 'u' -> {
                         if (i + 5 < end) {
                             try {
