@@ -32,8 +32,8 @@ public final class FastAI {
         AIProvider impl = switch (provider) {
             case "ollama" -> new OllamaClient(model);
             case "lmstudio" -> new LMStudioClient(model);
-            case "omniroute" -> new OmniRouteClient(model, argOrNull(args, 0), finalUrl);
             case "llamacpp", "llama.cpp", "llama" -> createLlamaCppClient(model, args);
+            case "omniroute" -> new OmniRouteClient(model, argOrNull(args, 0), finalUrl);
             case "openai" -> new OpenAIClient(model, argOrNull(args, 0));
             case "openrouter" -> new OpenRouterClient(model, argOrNull(args, 0));
             case "claude" -> new ClaudeClient(model, argOrNull(args, 0));

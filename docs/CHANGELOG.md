@@ -1,5 +1,17 @@
 # FastAI Version Changelog
 
+## [0.1.11] — 2026-08-23
+
+### Added & Optimized
+- **Byte-Level SSE Streaming Parser**: Zero-allocation SSE parser operating directly on raw byte buffers without intermediate line-string instantiations.
+- **Shared HTTP/2 Connection Pool**: Consolidated singleton `HttpClient` across all provider instances to reuse connections, TLS handshakes, and thread pools.
+- **Circuit-Breaking Health Cache**: Rate-limit and outage tracking in `FallbackRouterClient` with cooldown management.
+- **In-Process GGUF Model Cache**: Shared model registry for `FastAIModel` instances in `LlamaCppClient` preventing redundant RAM/VRAM reloads.
+- **FastJsonBuilder Integration**: Low-allocation payload serialization across OpenAI-compatible and Gemini clients.
+- **Removed Debug Disk I/O**: Completely eliminated raw file writes and disk logging for maximum throughput.
+
+---
+
 ## [0.1.9] — 2026-08-23
 
 ### Added

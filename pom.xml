@@ -6,7 +6,7 @@
 
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>fastai</artifactId>
-    <version>0.1.9</version>
+    <version>0.1.11</version>
     <packaging>jar</packaging>
 
     <name>FastAI</name>
