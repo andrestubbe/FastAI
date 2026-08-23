@@ -31,7 +31,10 @@ public class OpenAICompatibleClient implements AIProvider {
         this.baseUrl = baseUrl;
         this.model = model;
         this.apiKey = apiKey;
-        this.httpClient = HttpClient.newBuilder().build();
+        this.httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
     }
 
     @Override
@@ -128,7 +131,7 @@ public class OpenAICompatibleClient implements AIProvider {
                             // incomplete UTF-8 sequences split across SSE chunks
                             int contentIdx = data.indexOf("\"content\":");
                             if (contentIdx != -1) {
-                                int startQuote = data.indexOf("\"", contentIdx + 10);
+                                int startQuote = data.indexOf('"', contentIdx + 10);
                                 if (startQuote != -1) {
                                     int endQuote = startQuote + 1;
                                     boolean escaped = false;
@@ -144,28 +147,7 @@ public class OpenAICompatibleClient implements AIProvider {
                                         endQuote++;
                                     }
                                     if (endQuote < data.length()) {
-                                        String token = data.substring(startQuote + 1, endQuote);
-                                        // Unescape basic json
-                                        token = token.replace("\\\"", "\"").replace("\\n", "\n").replace("\\\\", "\\");
-                                        // Unescape unicode \\uXXXX
-                                        if (token.contains("\\u")) {
-                                            StringBuilder sb = new StringBuilder();
-                                            int i = 0;
-                                            while (i < token.length()) {
-                                                if (token.charAt(i) == '\\' && i + 5 < token.length() && token.charAt(i + 1) == 'u') {
-                                                    try {
-                                                        int code = Integer.parseInt(token.substring(i + 2, i + 6), 16);
-                                                        sb.append((char) code);
-                                                        i += 6;
-                                                        continue;
-                                                    } catch (NumberFormatException ignored) {}
-                                                }
-                                                sb.append(token.charAt(i));
-                                                i++;
-                                            }
-                                            token = sb.toString();
-                                        }
-                                        tokenHandler.accept(token);
+                                        tokenHandler.accept(unescapeJsonChunk(data, startQuote + 1, endQuote));
                                     }
                                 }
                             }
@@ -257,6 +239,40 @@ public class OpenAICompatibleClient implements AIProvider {
         } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
+
+    private static String unescapeJsonChunk(String src, int start, int end) {
+        StringBuilder sb = new StringBuilder(end - start);
+        for (int i = start; i < end; i++) {
+            char c = src.charAt(i);
+            if (c == '\\' && i + 1 < end) {
+                char next = src.charAt(i + 1);
+                switch (next) {
+                    case 'n' -> { sb.append('\n'); i++; }
+                    case 'r' -> { sb.append('\r'); i++; }
+                    case 't' -> { sb.append('\t'); i++; }
+                    case '"' -> { sb.append('"'); i++; }
+                    case '\\' -> { sb.append('\\'); i++; }
+                    case 'u' -> {
+                        if (i + 5 < end) {
+                            try {
+                                int code = Integer.parseInt(src.substring(i + 2, i + 6), 16);
+                                sb.append((char) code);
+                                i += 5;
+                            } catch (NumberFormatException e) {
+                                sb.append(c);
+                            }
+                        } else {
+                            sb.append(c);
+                        }
+                    }
+                    default -> sb.append(c);
+                }
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 
     private String buildJsonRequest(AIRequest request) {
