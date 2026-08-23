@@ -235,7 +235,18 @@ ai.stream("Write a poem", System.out::print);
 
 ---
 
-## Performance
+## Performance Benchmarks
+
+FastAI is rigorously profiled using **JMH** to guarantee zero overhead on network parsing and request transformation.
+
+| Metric / Hot-Path Operation | Score (ops/ms) | Ops per Second |
+|-----------------------------|----------------|----------------|
+| **Usage Parser**            | ~12,748 ops/ms | > 12.7 Million |
+| **SSE Byte-Level Stream Decoder** | ~63.98 ops/ms  | > 63,900 ops/sec |
+
+*Measured on Windows 11, Intel Core i5-1135G7 (Surface Pro 8), JDK 21.0.12. Evaluates continuous multi-chunk SSE decoding and inline usage metrics extraction without intermediate String line allocations.*
+
+### Framework Comparison
 
 FastAI is **zero-dependency** and **zero-allocation** for the core connection layer:
 
@@ -254,6 +265,7 @@ FastAI is **zero-dependency** and **zero-allocation** for the core connection la
 | Case | Java Example | Launcher | Description |
 |---|---|---|---|
 | **Unified AI Demo** | [Demo.java](examples/Demo/src/Demo.java) | `run-demo.bat` | Universal CLI demo supporting all 20+ local and cloud providers with real-time streaming. |
+| **JMH Microbenchmarks** | [FastAIBenchmark.java](examples/Benchmark/src/main/java/fastai/FastAIBenchmark.java) | `run-benchmark.bat` | JMH throughput benchmark for Byte-Level SSE Streaming and Usage parsing. |
 
 ---
 
