@@ -1,10 +1,10 @@
-# FastAI 0.1.13 — Unified AI client for Java
+# FastAI 0.1.14 — Unified AI client for Java
 
-[![Status](https://img.shields.io/badge/status-0.1.13-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.13)
+[![Status](https://img.shields.io/badge/status-0.1.14-brightgreen.svg)](https://github.com/andrestubbe/FastAI/releases/tag/0.1.14)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
-[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe/FastAI)
 
 ---
 
@@ -123,15 +123,15 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 <!-- FastAI Library -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
-    <artifactId>fastai</artifactId>
-    <version>0.1.13</version>
+    <artifactId>FastAI</artifactId>
+    <version>0.1.14</version>
 </dependency>
 
 <!-- FastJSON (Required Dependency) -->
 <dependency>
     <groupId>com.github.andrestubbe</groupId>
     <artifactId>FastJSON</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 
 <!-- FastAIModel (Local In-Process GPU Engine) -->
@@ -142,6 +142,30 @@ Add the JitPack repository and the dependencies to your `pom.xml`:
 </dependency>
 </dependencies>
 ```
+
+### Option 2: Gradle (via JitPack)
+
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.andrestubbe:FastAI:0.1.14'
+    implementation 'com.github.andrestubbe:FastJSON:0.1.4'
+    implementation 'com.github.andrestubbe.FastAIModel:fastaimodel-llama:0.1.4'
+}
+```
+
+### Option 3: Direct Download (No Build Tool)
+
+Download the latest JARs directly to add them to your classpath:
+
+1. ⚡ **[FastAI-0.1.14.jar](https://github.com/andrestubbe/FastAI/releases/download/0.1.14/FastAI-0.1.14.jar)** (Unified AI Client)
+2. 📦 **[FastJSON-0.1.4.jar](https://github.com/andrestubbe/FastJSON/releases/download/0.1.4/FastJSON-0.1.4.jar)** (Fast JSON Engine)
+3. 🧠 **[fastaimodel-llama-0.1.4.jar](https://github.com/andrestubbe/FastAIModel/releases/download/v0.1.4/fastaimodel-llama-0.1.4.jar)** (Local Inference Runtime)
+4. 🌋 **[fastgpu-0.1.1.jar](https://github.com/andrestubbe/FastGPU/releases/download/v0.1.1/fastgpu-0.1.1.jar)** (Vulkan GPU Acceleration)
+5. ⚙️ **[fastcore-0.1.0.jar](https://github.com/andrestubbe/FastCore/releases/download/0.1.0/fastcore-0.1.0.jar)** (Mandatory Native JNI Loader)
 
 ---
 
