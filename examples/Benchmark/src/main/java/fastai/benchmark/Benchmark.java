@@ -1,5 +1,7 @@
-package fastai;
+package fastai.benchmark;
 
+import fastai.AIRequest;
+import fastai.Usage;
 import fastai.internal.SseStreamDecoder;
 import fastai.internal.UsageParser;
 import org.openjdk.jmh.annotations.*;
@@ -17,10 +19,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
-@Warmup(iterations = 3, time = 2, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 3, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 1, jvmArgs = {"-server", "-XX:+UseG1GC", "-Xms256m", "-Xmx256m"})
-public class FastAIBenchmark {
+public class Benchmark {
 
     private byte[] sseSampleBytes;
     private String usageJsonSample;
@@ -40,7 +42,7 @@ public class FastAIBenchmark {
         this.sampleRequest = AIRequest.of("You are an expert system.", "Calculate fibonacci(50)");
     }
 
-    @Benchmark
+    @org.openjdk.jmh.annotations.Benchmark
     public int benchmarkSseByteLevelStreamDecoder() throws IOException {
         final AtomicInteger tokenCount = new AtomicInteger(0);
         final ByteArrayInputStream bais = new ByteArrayInputStream(this.sseSampleBytes);
@@ -48,7 +50,7 @@ public class FastAIBenchmark {
         return tokenCount.get();
     }
 
-    @Benchmark
+    @org.openjdk.jmh.annotations.Benchmark
     public Usage benchmarkUsageParser() {
         return UsageParser.parseUsage(this.usageJsonSample);
     }
