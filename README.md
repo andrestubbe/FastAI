@@ -14,7 +14,7 @@ FastAI is a **minimalist, hyper-fast Java AI library** that unifies 20+ major LL
 
 If you need **a drop-in AI module**, **multi-provider interchangeability**, or **clean FastJava-style code**, FastAI is your solution.
 
-[**Watch Demo (YouTube)**](https://youtu.be/kjfyZebSdj4) | Watch JMH Benchmark (Youtube)
+    [**Watch Demo (YouTube)**](https://youtu.be/kjfyZebSdj4) | Watch JMH Benchmark (Youtube)
 
 [![FastAI Showcase](docs/screenshot.png)](https://youtu.be/kjfyZebSdj4)
 
