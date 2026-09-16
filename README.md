@@ -72,7 +72,13 @@ public class Demo {
 
 ## Why FastAI?
 
-Current Java AI libraries (`LangChain4j`, `Spring AI`) are massive, framework-heavy, and come with dependency conflicts. Direct provider SDKs lock you into a single vendor.
+Current AI frameworks in Java (`LangChain4j`, `Spring AI`) are heavy, framework-bound, and come with dependency hell. Direct vendor SDKs lock you into single providers with bespoke APIs and bloated client stacks.
+
+FastAI solves this with three clear architectural choices:
+
+- **Zero JSON / HTTP Overhead**: Direct native Java Strings and streams—no Jackson object mapping or Netty pipeline locks.
+- **True Provider Interchangeability**: Switch between local llama.cpp GGUF, Ollama, Groq, Claude, and OpenAI simply by altering the connection string.
+- **In-Process GPU Offloading**: Native zero-IPC inference via `FastAIModel` with Vulkan and Metal hardware acceleration directly inside the JVM process.
 
 | Feature | LangChain4j / Spring AI | FastAI |
 |:---|:---|:---|
