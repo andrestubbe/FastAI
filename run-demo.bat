@@ -1,25 +1,18 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-echo [FastAI] Building core library...
-call mvn install -DskipTests -q
-if errorlevel 1 (
-    echo [ERROR] Core build failed.
-    exit /b 1
-)
 
-if not exist "examples\Demo\target\classes" (
-    echo [FastAI] Compiling Demo...
-    call mvn -f examples\Demo\pom.xml compile dependency:build-classpath "-Dmdep.outputFile=cp.txt" -DskipTests -q
-) else (
-    call mvn -f examples\Demo\pom.xml compile -DskipTests -q
-)
+echo [1/3] Building FastAI library...
+call mvn clean install -DskipTests -q
+if %errorlevel% neq 0 ( echo [ERROR] Build failed. & pause & exit /b 1 )
 
-if not exist "examples\Demo\cp.txt" (
-    call mvn -f examples\Demo\pom.xml dependency:build-classpath "-Dmdep.outputFile=cp.txt" -DskipTests -q
-)
+echo [2/3] Compiling Demo...
+cd examples\Demo
+call mvn compile -q
+if %errorlevel% neq 0 ( echo [ERROR] Demo compile failed. & pause & exit /b 1 )
 
-set /p CP=<"examples\Demo\cp.txt"
-java -cp "examples\Demo\target\classes;%CP%" Demo %*
+echo [3/3] Running Demo...
+call mvn exec:java -Dexec.mainClass=Demo -q
 
-
+cd ..\..
+pause
