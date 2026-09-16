@@ -60,6 +60,7 @@ public class Demo {
 - [Providers Supported](#providers-supported)
 - [Performance Benchmarks](#performance-benchmarks)
 - [API Quick Reference](#api-quick-reference)
+- [API Reference](#api-reference)
 - [Technical Demos & Benchmarks](#technical-demos--benchmarks)
 - [Installation](#installation)
 - [Documentation](#documentation)
@@ -182,6 +183,88 @@ FastAIBenchmark.benchmarkSseStreamDecoder thrpt    3     63.98   ops/ms
 | `ai.withTopK(n)` | `AI` | Sets top-K token sampling. | [Reference](docs/REFERENCE.md) |
 | `ai.withGpu(enabled)` | `AI` | Enables or disables GPU offloading for local GGUF models. | [Reference](docs/REFERENCE.md) |
 | `ai.withContextSize(n)` | `AI` | Sets the context window size for local GGUF models. | [Reference](docs/REFERENCE.md) |
+
+---
+
+## API Reference
+
+### Connect
+
+```java
+// Auto-Fallback Free Router (cycles through free providers on rate-limit/errors)
+AI ai = FastAI.auto();
+AI ai = FastAI.connect("auto:free");
+
+// Local Providers & In-Process GPU Engine
+AI ai = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf"); // Native Vulkan/Metal In-Process GPU Engine
+AI ai = FastAI.connect("ollama:llama3.1");
+AI ai = FastAI.connect("lmstudio:phi3");
+
+// Gateways
+AI ai = FastAI.connect("omniroute:claude-3-5-sonnet");
+AI ai = FastAI.connect("omniroute:deepseek-r1", "apiKey", "http://localhost:8000/v1");
+AI ai = FastAI.connect("larprouter:gpt-5.6-sol", "sk-larp-...");
+
+// Free-Tier / High-Speed Cloud Providers
+AI ai = FastAI.connect("groq:llama-3.3-70b-versatile", "gsk_...");
+AI ai = FastAI.connect("cerebras:llama3.1-70b", "csk-...");
+AI ai = FastAI.connect("sambanova:Meta-Llama-3.1-70B-Instruct", "key...");
+
+// OpenRouter Unified Gateway (200+ models)
+AI ai = FastAI.connect("openrouter:anthropic/claude-3.5-sonnet", "sk-or-...");
+AI ai = FastAI.connect("openrouter:deepseek/deepseek-r1", "sk-or-...");
+
+// Cloud Providers (requires API Key as second argument)
+AI ai = FastAI.connect("openai:gpt-4o", "sk-...");
+AI ai = FastAI.connect("claude:opus", "sk-ant-...");
+AI ai = FastAI.connect("mistral:large", "key...");
+AI ai = FastAI.connect("deepseek:chat", "key...");
+AI ai = FastAI.connect("gemini:gemini-1.5-flash", "AIzaSy...");
+```
+
+### Generation & Prompting
+
+```java
+// Simple prompt
+String answer = ai.ask("Hello!");
+
+// System + User prompt
+String answer = ai.ask("You are a math expert.", "Explain integrals.");
+
+// Multimodal (Vision/Files)
+String answer = ai.ask("What is in this image?", new File("diagram.png"));
+```
+
+### Streaming
+
+```java
+ai.stream("Write a poem", System.out::print);
+```
+
+### Real-World Production Patterns
+
+#### 1. Auto-Healing Resilient Cloud Agent
+
+```java
+// Automatically switches to next free provider if rate-limited
+AI ai = FastAI.auto();
+String result = ai.ask("Analyze this stack trace and suggest a patch:\n" + stackTrace);
+```
+
+#### 2. Local-First Air-Gapped Code Completion (0 IPC, GPU Accelerated)
+
+```java
+try (AI localEngine = FastAI.connect("llama:models/qwen2.5-coder-1.5b.gguf")) {
+    localEngine.stream("public static <T> List<T> reverse(List<T> list) {", System.out::print);
+}
+```
+
+#### 3. Real-Time Multimodal Vision Inspector
+
+```java
+AI visionAI = FastAI.connect("gemini:gemini-2.0-flash", apiKey);
+String caption = visionAI.ask("Describe the UI anomalies in this rendering:", new File("render_output.png"));
+```
 
 ---
 
